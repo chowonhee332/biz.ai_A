@@ -25,80 +25,110 @@ const steps = [
 ];
 
 const LayerGraphic = ({ activeStep }: { activeStep: number }) => {
-    const getFill = (stepIndex: number) => {
-        return activeStep === stepIndex ? '#0885FE' : '#d1d5db'; // Highlight color vs gray-300
-    };
+    // Height per block slice
+    const h = 60;
+    // Isometric properties
+    const dx = 160;
+    const dy = 92;
 
-    const getTextColor = (stepIndex: number) => {
-        return activeStep === stepIndex ? '#ffffff' : '#9ca3af'; // White text vs gray-400
-    };
+    // Labels for the left face, top-to-bottom order (index 0 is top)
+    const layerLabels = [
+        "ABC Lab",
+        "AI:ON-U\nDev.AI",
+        "Beast AI Gateway",
+        "Ops.AI"
+    ];
+
+    // Helper to get color states
+    const getTopColor = (index: number) => activeStep === index ? '#4da2ff' : '#9ca3af';
+    const getLeftColor = (index: number) => activeStep === index ? '#0885FE' : '#4b5563';
+    const getRightColor = (index: number) => activeStep === index ? '#054687' : '#1f2937';
 
     return (
         <div className="relative w-full aspect-square max-w-[500px] flex items-center justify-center">
             <svg
-                viewBox="0 0 800 800"
+                viewBox="-200 -300 400 600"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
                 className="w-full h-full drop-shadow-2xl"
             >
-                <g transform="translate(400, 200) scale(1.5)">
-                    {/* Base shadow */}
-                    <path d="M0 250 L200 350 L0 450 L-200 350 Z" fill="rgba(0,0,0,0.8)" filter="blur(20px)" />
+                <g stroke="#000000" strokeWidth="3" strokeLinejoin="round">
+                    {[0, 1, 2, 3].map((layerIndex) => {
+                        // Offset per layer (0 is top, 3 is bottom)
+                        const yOff = layerIndex * h;
 
-                    {/* Step 4: Bottom Layer (Ops.AI - K Cloud) */}
-                    <g className="transition-all duration-500 ease-in-out">
-                        <path d="M0 150 L200 250 L200 310 L0 410 L-200 310 L-200 250 Z" fill={activeStep === 3 ? '#0768c9' : '#9ca3af'} className="transition-colors duration-500" />
-                        <path d="M0 150 L200 250 L0 350 L-200 250 Z" fill={getFill(3)} className="transition-colors duration-500" />
-                        <path d="M0 350 L200 250 L200 310 L0 410 Z" fill={activeStep === 3 ? '#0657a8' : '#6b7280'} className="transition-colors duration-500" />
-                        <path d="M-200 250 L0 350 L0 410 L-200 310 Z" fill={activeStep === 3 ? '#054687' : '#4b5563'} className="transition-colors duration-500" />
-                        <text x="-160" y="270" fill={getTextColor(3)} fontSize="18" fontWeight="bold" transform="skewY(26)" style={{ pointerEvents: 'none' }} className="transition-colors duration-500">K Cloud</text>
-                    </g>
+                        // Points for the Left face
+                        const leftFace = `
+              0 ${yOff} 
+              -${dx} ${-dy + yOff} 
+              -${dx} ${-dy + h + yOff} 
+              0 ${h + yOff}
+            `;
 
-                    {/* Step 3: Third Layer (Beast AI Gateway - K RAI) */}
-                    <g className="transition-all duration-500 ease-in-out" transform="translate(0, -60)">
-                        <path d="M0 150 L200 250 L200 310 L0 410 L-200 310 L-200 250 Z" fill={activeStep === 2 ? '#0768c9' : '#9ca3af'} className="transition-colors duration-500" />
-                        <path d="M0 150 L200 250 L0 350 L-200 250 Z" fill={getFill(2)} className="transition-colors duration-500" />
-                        <path d="M0 350 L200 250 L200 310 L0 410 Z" fill={activeStep === 2 ? '#0657a8' : '#6b7280'} className="transition-colors duration-500" />
-                        <path d="M-200 250 L0 350 L0 410 L-200 310 Z" fill={activeStep === 2 ? '#054687' : '#4b5563'} className="transition-colors duration-500" />
-                        <text x="-160" y="270" fill={getTextColor(2)} fontSize="20" fontWeight="bold" transform="skewY(26)" style={{ pointerEvents: 'none' }} className="transition-colors duration-500">K RAI</text>
-                    </g>
+                        // Points for the Right face
+                        const rightFace = `
+              0 ${yOff} 
+              ${dx} ${-dy + yOff} 
+              ${dx} ${-dy + h + yOff} 
+              0 ${h + yOff}
+            `;
 
-                    {/* Step 2: Second Layer (AI:ON-U, Dev.AI - K intelligence Studio) */}
-                    <g className="transition-all duration-500 ease-in-out" transform="translate(0, -120)">
-                        <path d="M0 150 L200 250 L200 310 L0 410 L-200 310 L-200 250 Z" fill={activeStep === 1 ? '#0768c9' : '#9ca3af'} className="transition-colors duration-500" />
-                        <path d="M0 150 L200 250 L0 350 L-200 250 Z" fill={getFill(1)} className="transition-colors duration-500" />
-                        <path d="M0 350 L200 250 L200 310 L0 410 Z" fill={activeStep === 1 ? '#0657a8' : '#6b7280'} className="transition-colors duration-500" />
-                        <path d="M-200 250 L0 350 L0 410 L-200 310 Z" fill={activeStep === 1 ? '#054687' : '#4b5563'} className="transition-colors duration-500" />
-                        <text x="-160" y="270" fill={getTextColor(1)} fontSize="18" fontWeight="bold" transform="skewY(26)" style={{ pointerEvents: 'none' }} className="transition-colors duration-500">K intelligence Studio</text>
-                    </g>
+                        // Points for the Top face (only visible for the top layer 0 in a solid stack, 
+                        // but we'll draw it for all just in case, though they overlap)
+                        const topFace = `
+              0 ${yOff}
+              -${dx} ${-dy + yOff}
+              0 ${-dy * 2 + yOff}
+              ${dx} ${-dy + yOff}
+            `;
 
-                    {/* Step 1: Top Layer (ABC Lab - K Agent, K RAG, K Model) */}
-                    <g className="transition-all duration-500 ease-in-out" transform="translate(0, -180)">
-                        {/* Split top layer into 3 blocks */}
-                        {/* Block 1 (Left - K Agent) */}
-                        <g>
-                            <path d="M-66 183 L0 250 L-66 283 L-133 216 Z" fill={getFill(0)} className="transition-colors duration-500" />
-                            <path d="M-66 283 L0 250 L0 310 L-66 343 Z" fill={activeStep === 0 ? '#0657a8' : '#6b7280'} className="transition-colors duration-500" />
-                            <path d="M-133 216 L-66 283 L-66 343 L-133 276 Z" fill={activeStep === 0 ? '#054687' : '#4b5563'} className="transition-colors duration-500" />
-                            <text x="-90" y="250" fill={getTextColor(0)} fontSize="14" fontWeight="bold" transform="skewY(26)" style={{ pointerEvents: 'none' }} className="transition-colors duration-500">K Agent</text>
-                        </g>
+                        return (
+                            <g key={layerIndex} className="transition-all duration-500 ease-in-out">
+                                {/* Top Face */}
+                                {layerIndex === 0 && (
+                                    <polygon
+                                        points={topFace}
+                                        fill={getTopColor(layerIndex)}
+                                        className="transition-colors duration-500"
+                                    />
+                                )}
 
-                        {/* Block 2 (Middle - K RAG) */}
-                        <g transform="translate(66, 33)">
-                            <path d="M-66 183 L0 250 L-66 283 L-133 216 Z" fill={getFill(0)} className="transition-colors duration-500" />
-                            <path d="M-66 283 L0 250 L0 310 L-66 343 Z" fill={activeStep === 0 ? '#0657a8' : '#6b7280'} className="transition-colors duration-500" />
-                            <path d="M-133 216 L-66 283 L-66 343 L-133 276 Z" fill={activeStep === 0 ? '#054687' : '#4b5563'} className="transition-colors duration-500" />
-                            <text x="-80" y="250" fill={getTextColor(0)} fontSize="14" fontWeight="bold" transform="skewY(26)" style={{ pointerEvents: 'none' }} className="transition-colors duration-500">K RAG</text>
-                        </g>
+                                {/* Left Face */}
+                                <polygon
+                                    points={leftFace}
+                                    fill={getLeftColor(layerIndex)}
+                                    className="transition-colors duration-500"
+                                />
 
-                        {/* Block 3 (Right - K Model) */}
-                        <g transform="translate(133, 66)">
-                            <path d="M-66 183 L0 250 L-66 283 L-133 216 Z" fill={activeStep === 0 ? '#ff0000' : getFill(0)} className="transition-colors duration-500" /> {/* Explicitly making it red in the example screenshot, but instructions say color blue #0885FE, so I'll follow user's general text, but let's make it the active color requested. Actually the prompt says "스크롤에따라 각 블록별 파란색으로 칠해줘!! 빨간색이 아니라" so we use the blue color getFill(0) for all. */}
-                            <path d="M-66 283 L0 250 L0 310 L-66 343 Z" fill={activeStep === 0 ? '#0657a8' : '#6b7280'} className="transition-colors duration-500" />
-                            <path d="M-133 216 L-66 283 L-66 343 L-133 276 Z" fill={activeStep === 0 ? '#054687' : '#4b5563'} className="transition-colors duration-500" />
-                            <text x="-85" y="250" fill={getTextColor(0)} fontSize="14" fontWeight="bold" transform="skewY(26)" style={{ pointerEvents: 'none' }} className="transition-colors duration-500">K Model</text>
-                        </g>
-                    </g>
+                                {/* Right Face */}
+                                <polygon
+                                    points={rightFace}
+                                    fill={getRightColor(layerIndex)}
+                                    className="transition-colors duration-500"
+                                />
+
+                                {/* Text Label on Left Face */}
+                                <g className="transition-opacity duration-500" style={{ opacity: activeStep === layerIndex ? 1 : 0 }}>
+                                    <text
+                                        x={-dx * 0.5}
+                                        y={yOff + h * 0.5 - dy * 0.5 + 5}
+                                        fill="#ffffff"
+                                        fontSize="18"
+                                        fontWeight="bold"
+                                        textAnchor="middle"
+                                        transform={`skewY(30)`}
+                                        style={{ pointerEvents: 'none' }}
+                                    >
+                                        {layerLabels[layerIndex].split('\n').map((line, i, arr) => (
+                                            <tspan x={-dx * 0.5} dy={i === 0 ? (arr.length > 1 ? -10 : 0) : 20} key={i}>
+                                                {line}
+                                            </tspan>
+                                        ))}
+                                    </text>
+                                </g>
+                            </g>
+                        );
+                    })}
                 </g>
             </svg>
         </div>
