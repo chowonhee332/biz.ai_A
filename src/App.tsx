@@ -280,7 +280,7 @@ const DomainAccordionItem = ({
             layout
             initial={false}
           >
-            <h4 className={`text-white font-normal transition-colors duration-500 whitespace-nowrap ${isActive ? 'text-[20px] mb-4' : 'text-[20px]'}`}>
+            <h4 className={`text-white font-normal transition-colors duration-500 whitespace-nowrap ${isActive ? 'text-[18px] mb-4' : 'text-[18px]'}`}>
               {title}
             </h4>
           </motion.div>
