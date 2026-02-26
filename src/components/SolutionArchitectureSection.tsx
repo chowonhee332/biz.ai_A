@@ -1,5 +1,5 @@
 import { useRef, useEffect, useState } from 'react';
-import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
+import { motion, useScroll, useSpring } from 'framer-motion';
 
 const steps = [
     {
@@ -25,11 +25,11 @@ const steps = [
 ];
 
 const LayerGraphic = ({ activeStep }: { activeStep: number }) => {
-    // Height per block slice
-    const h = 75;
-    // Isometric properties
-    const dx = 180;
-    const dy = 104;
+    // Height per block slice (reduced thickness)
+    const h = 45;
+    // Isometric properties (base scale)
+    const dx = 200;
+    const dy = 115;
 
     // Labels from bottom to top (idx 3 is bottom, idx 0 is top)
     const layerLabels = [
@@ -40,9 +40,10 @@ const LayerGraphic = ({ activeStep }: { activeStep: number }) => {
     ];
 
     return (
-        <div className="relative w-full aspect-square max-w-[500px] flex items-center justify-center">
+        // Increased max-w and added scale to make the cube 2x larger visually
+        <div className="relative w-full aspect-square max-w-[800px] lg:scale-[1.3] flex items-center justify-center transform lg:translate-x-16 pointer-events-none">
             <svg
-                viewBox="-220 -350 440 650"
+                viewBox="-220 -280 440 600"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
                 className="w-full h-full drop-shadow-2xl"
@@ -50,10 +51,6 @@ const LayerGraphic = ({ activeStep }: { activeStep: number }) => {
                 <g stroke="#000000" strokeWidth="4" strokeLinejoin="round">
                     {[0, 1, 2, 3].map((layerIndex) => {
                         // isHighlight: The activeStep corresponds to how many layers from bottom are lit.
-                        // step 0 -> only layer 3 (bottom) is lit.
-                        // step 1 -> layer 3 and layer 2 are lit.
-                        // step 2 -> layer 3, 2, 1 are lit.
-                        // step 3 -> all layers 3, 2, 1, 0 are lit.
                         const isHighlight = layerIndex >= (3 - activeStep);
 
                         // Text to show depends on the layer. layer 3 -> ABC Lab, layer 0 -> Ops.AI
@@ -83,13 +80,12 @@ const LayerGraphic = ({ activeStep }: { activeStep: number }) => {
                                         />
                                         <text
                                             x="0"
-                                            y="-15"
+                                            y="-12"
                                             fill={isHighlight ? "#ffffff" : "#888888"}
-                                            fontSize="56"
+                                            fontSize="64"
                                             fontWeight="bold"
                                             textAnchor="middle"
                                             transform={`translate(0, ${yOff - dy}) scale(1, 0.577) rotate(-45)`}
-                                            style={{ pointerEvents: 'none' }}
                                             className="transition-colors duration-500"
                                         >
                                             Kt ds
@@ -113,19 +109,18 @@ const LayerGraphic = ({ activeStep }: { activeStep: number }) => {
 
                                 {/* Text Label on Left Face */}
                                 <text
-                                    x={-dx * 0.5}
-                                    y={yOff + h * 0.5 - dy * 0.5 + 6}
+                                    x={-dx + 16} // positioned near the left edge
+                                    y={yOff + h * 0.5 - dy * 0.5 + 4} // vertically center aligned
                                     fill={isHighlight ? '#ffffff' : '#555555'}
-                                    fontSize="20"
+                                    fontSize="22"
                                     fontWeight="bold"
-                                    textAnchor="middle"
-                                    transform={`skewY(30)`}
-                                    style={{ pointerEvents: 'none' }}
+                                    textAnchor="start" // Ensure flush formatting
+                                    transform="skewY(30)"
                                     className="transition-colors duration-500"
                                     stroke="none"
                                 >
                                     {labelText.split('\n').map((line, i, arr) => (
-                                        <tspan x={-dx * 0.5} dy={i === 0 ? (arr.length > 1 ? -12 : 0) : 24} key={i}>
+                                        <tspan x={-dx + 16} dy={i === 0 ? (arr.length > 1 ? -12 : 0) : 26} key={i}>
                                             {line}
                                         </tspan>
                                     ))}
@@ -176,41 +171,55 @@ export default function SolutionArchitectureSection() {
                 <div className="max-w-[1200px] mx-auto w-full px-6 flex flex-col lg:flex-row items-center justify-between gap-12">
 
                     {/* Left Text Content */}
-                    <div className="w-full lg:w-1/2 flex flex-col justify-center">
-                        <div className="mb-16">
+                    <div className="w-full lg:w-5/12 flex flex-col justify-center relative z-10">
+                        <div className="mb-14">
                             <span className="text-[#0885FE] font-bold text-[16px] tracking-widest block mb-4 uppercase">Architecture</span>
                             <h2 className="text-[48px] lg:text-[56px] font-black text-white tracking-tight leading-tight">
                                 Kt ds AI Solution
                             </h2>
                         </div>
 
-                        <div className="flex flex-col gap-12">
-                            {steps.map((step, index) => {
-                                const isActive = activeStep === index;
-                                return (
-                                    <div
-                                        key={index}
-                                        className={`transition-all duration-500 ${isActive ? 'opacity-100 pl-4 border-l-2 border-[#0885FE]' : 'opacity-20 pl-4 border-l-2 border-transparent'}`}
-                                    >
-                                        <div className={`text-[24px] font-bold mb-2 transition-colors duration-500 ${isActive ? 'text-[#0885FE]' : 'text-white'}`}>
-                                            {step.num}
+                        {/* Scrolling / Masked Viewport */}
+                        <div
+                            className="relative h-[320px] overflow-hidden"
+                            style={{
+                                WebkitMaskImage: 'linear-gradient(to bottom, black 50%, transparent 100%)',
+                                maskImage: 'linear-gradient(to bottom, black 50%, transparent 100%)'
+                            }}
+                        >
+                            <motion.div
+                                className="flex flex-col absolute w-full"
+                                animate={{ y: -(activeStep * 150) }}
+                                transition={{ type: "spring", stiffness: 100, damping: 25 }}
+                            >
+                                {steps.map((step, index) => {
+                                    const isActive = activeStep === index;
+                                    return (
+                                        <div
+                                            key={index}
+                                            className={`h-[150px] flex-shrink-0 transition-all duration-500 ${isActive ? 'opacity-100 pl-6 border-l-4 border-[#0885FE]' : 'opacity-20 pl-6 border-l-4 border-transparent'}`}
+                                        >
+                                            <div className={`text-[28px] font-bold mb-1 transition-colors duration-500 ${isActive ? 'text-[#0885FE]' : 'text-[#888888]'}`}>
+                                                {step.num}
+                                            </div>
+                                            <h3 className={`text-[26px] font-bold mb-3 transition-colors duration-500 ${isActive ? 'text-white' : 'text-[#888888]'}`}>{step.title}</h3>
+                                            <div className="text-[18px] whitespace-pre-line leading-relaxed">
+                                                {step.desc.split('\n').map((line, i) => (
+                                                    <div key={i} className="flex items-center gap-2">
+                                                        <span className="text-[#0885FE]">•</span>
+                                                        <span className={isActive ? 'text-gray-300' : 'text-[#555555]'}>{line}</span>
+                                                    </div>
+                                                ))}
+                                            </div>
                                         </div>
-                                        <h3 className="text-white text-[24px] font-bold mb-4">{step.title}</h3>
-                                        <div className="text-gray-300 text-[18px] whitespace-pre-line leading-relaxed">
-                                            {step.desc.split('\n').map((line, i) => (
-                                                <div key={i} className="flex items-center gap-2">
-                                                    <span className="text-[#0885FE]">•</span> {line}
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </div>
-                                );
-                            })}
+                                    );
+                                })}
+                            </motion.div>
                         </div>
                     </div>
 
                     {/* Right SVG Graphic */}
-                    <div className="w-full lg:w-1/2 flex justify-center lg:justify-end items-center">
+                    <div className="w-full lg:w-7/12 flex justify-center lg:justify-end items-center px-4">
                         <LayerGraphic activeStep={activeStep} />
                     </div>
 
