@@ -243,10 +243,10 @@ const DomainAccordionItem = ({
     <motion.div
       layout
       onMouseEnter={onMouseEnter}
-      className="relative h-[600px] overflow-hidden cursor-pointer rounded-2xl smooth-gpu"
+      className="relative h-[700px] overflow-hidden cursor-pointer rounded-2xl smooth-gpu"
       style={{ willChange: 'flex, width' }}
       animate={{
-        flex: isActive ? 3 : 0.5,
+        flex: isActive ? 620 : 137,
       }}
       transition={{
         type: "spring",
