@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import ParticleEngine from './components/ParticleEngine';
+import SolutionArchitectureSection from './components/SolutionArchitectureSection';
 import HeroContent from './components/HeroContent';
 import { LightRays } from './components/LightRays';
 import Silk from './components/Silk';
@@ -760,6 +761,8 @@ const App = () => {
             </section>
           </motion.div>
         </div>
+
+        <SolutionArchitectureSection />
 
         <section id="domain" className="py-32 px-6 relative overflow-hidden bg-[#0a0a0a] pb-16">
           <div className="max-w-[1200px] mx-auto">
