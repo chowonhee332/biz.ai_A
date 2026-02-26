@@ -129,13 +129,13 @@ export default function MultiAgentPlatformPage() {
 
                                 {/* 주요 고객군 */}
                                 <div className="mb-12">
-                                    <h3 className="text-[14px] font-bold text-rose-500 mb-4 tracking-wider uppercase">주요 고객군</h3>
+                                    <h3 className="text-[14px] font-bold text-[#0885FE] mb-4 tracking-wider uppercase">주요 고객군</h3>
                                     <p className="text-white/80 text-[16px] font-medium leading-relaxed">보안 규제가 강하거나 내부 AI 개발 환경 구축이 필요한 금융·공공·의료·방위 기관</p>
                                 </div>
 
                                 {/* 핵심가치 Grid */}
                                 <div className="mb-12">
-                                    <h3 className="text-[14px] font-bold text-rose-500 mb-6 tracking-wider uppercase">핵심가치</h3>
+                                    <h3 className="text-[14px] font-bold text-[#0885FE] mb-6 tracking-wider uppercase">핵심가치</h3>
                                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                                         {[
                                             { title: "보안 준수", desc: "폐쇄망 내 설치로 코드 유출 걱정 무" },
@@ -152,7 +152,7 @@ export default function MultiAgentPlatformPage() {
 
                                 {/* 주요 기능 List */}
                                 <div className="mb-12">
-                                    <h3 className="text-[14px] font-bold text-rose-500 mb-6 tracking-wider uppercase">주요기능</h3>
+                                    <h3 className="text-[14px] font-bold text-[#0885FE] mb-6 tracking-wider uppercase">주요기능</h3>
                                     <div className="bg-white/5 rounded-2xl p-8 border border-white/5 space-y-4">
                                         {[
                                             "코드 자동 생성: 고품질 코드 생성 및 자동 완성 지원",
@@ -172,8 +172,8 @@ export default function MultiAgentPlatformPage() {
 
                                 {/* 특장점 (Pink Background Section) */}
                                 <div className="mb-12">
-                                    <h3 className="text-[14px] font-bold text-rose-500 mb-6 tracking-wider uppercase">특장점</h3>
-                                    <div className="bg-rose-500/5 rounded-2xl p-8 border border-rose-500/10 space-y-10">
+                                    <h3 className="text-[14px] font-bold text-[#0885FE] mb-6 tracking-wider uppercase">특장점</h3>
+                                    <div className="bg-[#0885FE]/5 rounded-2xl p-8 border border-[#0885FE]/10 space-y-10">
                                         {[
                                             { title: "1) 폐쇄망 특화 설치형 패키지", desc: "GPU 기반 Workstation 또는 Server 형태로 기업 내부 직접 설치되어 외부 연결 없이 보호할 수 있습니다.\n공공·국방·금융 등 보안 문제가 민감한 환경의 AI 개발을 선도적으로 돕습니다." },
                                             { title: "2) AI 개발 에이전트 일체 내장", desc: "Code Assistant, Data Analyst 등 특화 Agent를 기본 탑재하고 있습니다.\n복잡한 설치 과정 없이 바로 사용 가능한 통합형 Appliance입니다." },
@@ -191,7 +191,7 @@ export default function MultiAgentPlatformPage() {
 
                                 {/* 이렇게 활용하세요 */}
                                 <div className="mb-12">
-                                    <h3 className="text-[14px] font-bold text-rose-500 mb-6 tracking-wider uppercase">이렇게 활용하세요</h3>
+                                    <h3 className="text-[14px] font-bold text-[#0885FE] mb-6 tracking-wider uppercase">이렇게 활용하세요</h3>
                                     <div className="space-y-4">
                                         {[
                                             { title: "보안이 중요한 프로젝트에서 AI 코딩 도구를 내부망에 사용하고 싶으신 경우", desc: "폐쇄망 환경에서의 AI 코드 생성 및 분석 지원" },
@@ -201,7 +201,7 @@ export default function MultiAgentPlatformPage() {
                                             <div key={i} className="bg-white/5 rounded-2xl p-6 border border-white/5">
                                                 <h4 className="text-[16px] font-bold text-white mb-2 break-keep">{item.title}</h4>
                                                 <p className="text-white/40 text-[14px] flex items-center gap-2">
-                                                    <span className="text-rose-500">›</span> {item.desc}
+                                                    <span className="text-[#0885FE]">›</span> {item.desc}
                                                 </p>
                                             </div>
                                         ))}
@@ -210,7 +210,7 @@ export default function MultiAgentPlatformPage() {
 
                                 {/* 고객사례 */}
                                 <div className="mb-12">
-                                    <h3 className="text-[14px] font-bold text-rose-500 mb-6 tracking-wider uppercase">고객사례</h3>
+                                    <h3 className="text-[14px] font-bold text-[#0885FE] mb-6 tracking-wider uppercase">고객사례</h3>
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                         {[
                                             {
@@ -250,8 +250,8 @@ export default function MultiAgentPlatformPage() {
                                                         <p className="text-white/60">{item.solution}</p>
                                                     </div>
                                                     <div className="text-[13px]">
-                                                        <p className="text-rose-500 font-bold mb-1">Result</p>
-                                                        <p className="text-rose-500 font-bold">{item.result}</p>
+                                                        <p className="text-[#0885FE] font-bold mb-1">Result</p>
+                                                        <p className="text-[#0885FE] font-bold">{item.result}</p>
                                                     </div>
                                                 </div>
                                                 <button className="mt-4 text-white/40 text-[12px] flex items-center gap-1 hover:text-white transition-all">자세히 보기 <ChevronRight size={12} /></button>
@@ -262,7 +262,7 @@ export default function MultiAgentPlatformPage() {
 
                                 {/* 소개동영상 (Video Placeholder) */}
                                 <div className="mb-12">
-                                    <h3 className="text-[14px] font-bold text-rose-500 mb-6 tracking-wider uppercase">소개동영상</h3>
+                                    <h3 className="text-[14px] font-bold text-[#0885FE] mb-6 tracking-wider uppercase">소개동영상</h3>
                                     <div className="relative aspect-video rounded-3xl overflow-hidden bg-zinc-900 border border-white/5 group cursor-pointer">
                                         <div className="absolute inset-0 flex flex-col items-center justify-center text-center gap-4 bg-black/60 opacity-100 group-hover:bg-black/40 transition-all">
                                             <PlayCircle size={64} className="text-white/60 group-hover:text-white group-hover:scale-110 transition-all" />
@@ -276,16 +276,16 @@ export default function MultiAgentPlatformPage() {
 
                                 {/* 요금제 */}
                                 <div className="mb-12">
-                                    <h3 className="text-[14px] font-bold text-rose-500 mb-6 tracking-wider uppercase">요금제</h3>
+                                    <h3 className="text-[14px] font-bold text-[#0885FE] mb-6 tracking-wider uppercase">요금제</h3>
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                         {[
                                             { name: "CodeBox Standard", price: "Workstation GPU 탑재 + 전용 LLM" },
                                             { name: "CodeBox Enterprise", price: "Server급 GPU 탑재 + 커스텀 LLM + 전문가 지원" }
                                         ].map((plan, i) => (
-                                            <div key={i} className="bg-white/5 rounded-2xl p-6 border border-white/5 hover:border-rose-500/30 transition-all cursor-pointer group">
-                                                <h4 className="text-[16px] font-bold text-white mb-2 group-hover:text-rose-400 transition-colors uppercase">{plan.name}</h4>
+                                            <div key={i} className="bg-white/5 rounded-2xl p-6 border border-white/5 hover:border-[#0885FE]/30 transition-all cursor-pointer group">
+                                                <h4 className="text-[16px] font-bold text-white mb-2 group-hover:text-[#0885FE] transition-colors uppercase">{plan.name}</h4>
                                                 <p className="text-white/40 text-[13px] mb-4">{plan.price}</p>
-                                                <button className="text-rose-500 text-[13px] font-bold flex items-center gap-1">자세히 보기 <ChevronRight size={12} /></button>
+                                                <button className="text-[#0885FE] text-[13px] font-bold flex items-center gap-1">자세히 보기 <ChevronRight size={12} /></button>
                                             </div>
                                         ))}
                                     </div>
@@ -293,7 +293,7 @@ export default function MultiAgentPlatformPage() {
 
                                 {/* 제품 상세 문의 */}
                                 <div className="mb-12">
-                                    <h3 className="text-[14px] font-bold text-rose-500 mb-6 tracking-wider uppercase">제품 상세 문의</h3>
+                                    <h3 className="text-[14px] font-bold text-[#0885FE] mb-6 tracking-wider uppercase">제품 상세 문의</h3>
                                     <div className="flex flex-col md:flex-row gap-4">
                                         <div className="flex-1 bg-white/5 rounded-xl p-4 border border-white/5 flex items-center justify-center gap-3 text-white/60 text-[14px]">
                                             <span className="text-[18px]">📧</span> codebox@ktds.com
@@ -306,7 +306,7 @@ export default function MultiAgentPlatformPage() {
 
                                 {/* 관련 리소스 */}
                                 <div className="mb-12">
-                                    <h3 className="text-[14px] font-bold text-rose-500 mb-6 tracking-wider uppercase">관련 리소스</h3>
+                                    <h3 className="text-[14px] font-bold text-[#0885FE] mb-6 tracking-wider uppercase">관련 리소스</h3>
                                     <div className="space-y-3">
                                         {[
                                             { name: "CodeBox 제품 브로셔", size: "PDF" },
