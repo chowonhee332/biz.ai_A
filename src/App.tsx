@@ -246,7 +246,7 @@ const DomainAccordionItem = ({
       className="relative h-[700px] overflow-hidden cursor-pointer rounded-2xl smooth-gpu"
       style={{ willChange: 'flex, width' }}
       animate={{
-        flex: isActive ? 620 : 137,
+        flex: isActive ? 660 : 127,
       }}
       transition={{
         type: "spring",
