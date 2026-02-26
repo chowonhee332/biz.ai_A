@@ -26,12 +26,12 @@ const steps = [
 
 const LayerGraphic = ({ activeStep }: { activeStep: number }) => {
     // Height per block slice
-    const h = 60;
+    const h = 75;
     // Isometric properties
-    const dx = 160;
-    const dy = 92;
+    const dx = 180;
+    const dy = 104;
 
-    // Labels for the left face, top-to-bottom order (index 0 is top)
+    // Labels from bottom to top (idx 3 is bottom, idx 0 is top)
     const layerLabels = [
         "ABC Lab",
         "AI:ON-U\nDev.AI",
@@ -39,93 +39,97 @@ const LayerGraphic = ({ activeStep }: { activeStep: number }) => {
         "Ops.AI"
     ];
 
-    // Helper to get color states
-    const getTopColor = (index: number) => activeStep === index ? '#4da2ff' : '#9ca3af';
-    const getLeftColor = (index: number) => activeStep === index ? '#0885FE' : '#4b5563';
-    const getRightColor = (index: number) => activeStep === index ? '#054687' : '#1f2937';
-
     return (
         <div className="relative w-full aspect-square max-w-[500px] flex items-center justify-center">
             <svg
-                viewBox="-200 -300 400 600"
+                viewBox="-220 -350 440 650"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
                 className="w-full h-full drop-shadow-2xl"
             >
-                <g stroke="#000000" strokeWidth="3" strokeLinejoin="round">
+                <g stroke="#000000" strokeWidth="4" strokeLinejoin="round">
                     {[0, 1, 2, 3].map((layerIndex) => {
+                        // isHighlight: The activeStep corresponds to how many layers from bottom are lit.
+                        // step 0 -> only layer 3 (bottom) is lit.
+                        // step 1 -> layer 3 and layer 2 are lit.
+                        // step 2 -> layer 3, 2, 1 are lit.
+                        // step 3 -> all layers 3, 2, 1, 0 are lit.
+                        const isHighlight = layerIndex >= (3 - activeStep);
+
+                        // Text to show depends on the layer. layer 3 -> ABC Lab, layer 0 -> Ops.AI
+                        const labelText = layerLabels[3 - layerIndex];
+
                         // Offset per layer (0 is top, 3 is bottom)
                         const yOff = layerIndex * h;
 
                         // Points for the Left face
-                        const leftFace = `
-              0 ${yOff} 
-              -${dx} ${-dy + yOff} 
-              -${dx} ${-dy + h + yOff} 
-              0 ${h + yOff}
-            `;
+                        const leftFace = `0 ${yOff} -${dx} ${-dy + yOff} -${dx} ${-dy + h + yOff} 0 ${h + yOff}`;
 
                         // Points for the Right face
-                        const rightFace = `
-              0 ${yOff} 
-              ${dx} ${-dy + yOff} 
-              ${dx} ${-dy + h + yOff} 
-              0 ${h + yOff}
-            `;
+                        const rightFace = `0 ${yOff} ${dx} ${-dy + yOff} ${dx} ${-dy + h + yOff} 0 ${h + yOff}`;
 
-                        // Points for the Top face (only visible for the top layer 0 in a solid stack, 
-                        // but we'll draw it for all just in case, though they overlap)
-                        const topFace = `
-              0 ${yOff}
-              -${dx} ${-dy + yOff}
-              0 ${-dy * 2 + yOff}
-              ${dx} ${-dy + yOff}
-            `;
+                        // Points for the Top face
+                        const topFace = `0 ${yOff} -${dx} ${-dy + yOff} 0 ${-dy * 2 + yOff} ${dx} ${-dy + yOff}`;
 
                         return (
                             <g key={layerIndex} className="transition-all duration-500 ease-in-out">
-                                {/* Top Face */}
+                                {/* Top Face (Only drawn for the very top layer, but colored differently if the whole stack is lit) */}
                                 {layerIndex === 0 && (
-                                    <polygon
-                                        points={topFace}
-                                        fill={getTopColor(layerIndex)}
-                                        className="transition-colors duration-500"
-                                    />
+                                    <g>
+                                        <polygon
+                                            points={topFace}
+                                            fill={isHighlight ? "#4da2ff" : "#e5e7eb"}
+                                            className="transition-colors duration-500"
+                                        />
+                                        <text
+                                            x="0"
+                                            y="-15"
+                                            fill={isHighlight ? "#ffffff" : "#888888"}
+                                            fontSize="56"
+                                            fontWeight="bold"
+                                            textAnchor="middle"
+                                            transform={`translate(0, ${yOff - dy}) scale(1, 0.577) rotate(-45)`}
+                                            style={{ pointerEvents: 'none' }}
+                                            className="transition-colors duration-500"
+                                        >
+                                            Kt ds
+                                        </text>
+                                    </g>
                                 )}
 
                                 {/* Left Face */}
                                 <polygon
                                     points={leftFace}
-                                    fill={getLeftColor(layerIndex)}
+                                    fill={isHighlight ? '#0885FE' : '#cccccc'}
                                     className="transition-colors duration-500"
                                 />
 
                                 {/* Right Face */}
                                 <polygon
                                     points={rightFace}
-                                    fill={getRightColor(layerIndex)}
+                                    fill={isHighlight ? '#054687' : '#444444'}
                                     className="transition-colors duration-500"
                                 />
 
                                 {/* Text Label on Left Face */}
-                                <g className="transition-opacity duration-500" style={{ opacity: activeStep === layerIndex ? 1 : 0 }}>
-                                    <text
-                                        x={-dx * 0.5}
-                                        y={yOff + h * 0.5 - dy * 0.5 + 5}
-                                        fill="#ffffff"
-                                        fontSize="18"
-                                        fontWeight="bold"
-                                        textAnchor="middle"
-                                        transform={`skewY(30)`}
-                                        style={{ pointerEvents: 'none' }}
-                                    >
-                                        {layerLabels[layerIndex].split('\n').map((line, i, arr) => (
-                                            <tspan x={-dx * 0.5} dy={i === 0 ? (arr.length > 1 ? -10 : 0) : 20} key={i}>
-                                                {line}
-                                            </tspan>
-                                        ))}
-                                    </text>
-                                </g>
+                                <text
+                                    x={-dx * 0.5}
+                                    y={yOff + h * 0.5 - dy * 0.5 + 6}
+                                    fill={isHighlight ? '#ffffff' : '#555555'}
+                                    fontSize="20"
+                                    fontWeight="bold"
+                                    textAnchor="middle"
+                                    transform={`skewY(30)`}
+                                    style={{ pointerEvents: 'none' }}
+                                    className="transition-colors duration-500"
+                                    stroke="none"
+                                >
+                                    {labelText.split('\n').map((line, i, arr) => (
+                                        <tspan x={-dx * 0.5} dy={i === 0 ? (arr.length > 1 ? -12 : 0) : 24} key={i}>
+                                            {line}
+                                        </tspan>
+                                    ))}
+                                </text>
                             </g>
                         );
                     })}
