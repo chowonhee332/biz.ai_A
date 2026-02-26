@@ -94,7 +94,7 @@ const SolutionCard = ({ image, title, desc, highlight }: { image: string; title:
     />
 
     {/* Hover Overlay View */}
-    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col p-8 text-left">
+    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col p-10 text-left">
       <div
         className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
         style={{ backgroundImage: `url('/thumbnail_bg.png')` }}
@@ -102,12 +102,12 @@ const SolutionCard = ({ image, title, desc, highlight }: { image: string; title:
       <div className="absolute inset-0 bg-black/60" />
 
       <div className="relative z-10 flex flex-col h-full font-pretendard">
-        <h4 className="text-white text-[24px] font-bold mb-4">{title}</h4>
-        <p className="text-white/80 text-[15px] leading-relaxed mb-8 break-keep font-medium">
+        <h4 className="text-white text-[28px] font-bold mb-1.5 tracking-tight">{title}</h4>
+        <p className="text-white/80 text-[16px] leading-relaxed mb-8 break-keep font-normal">
           {desc}
         </p>
         <div className="mt-auto">
-          <span className="text-[#00E5FF] font-bold text-[16px] tracking-tight">{highlight}</span>
+          <span className="text-[#00E5FF] font-medium text-[16px] tracking-tight">{highlight}</span>
         </div>
       </div>
     </div>
@@ -669,6 +669,7 @@ const App = () => {
             <section id="solution" className="py-32 px-6">
               <div className="max-w-[1200px] mx-auto relative">
                 <div className="text-center mb-20 font-pretendard flex flex-col items-center relative z-10">
+                  <span className="text-[#0885FE] font-bold text-[14px] tracking-widest block mb-5 uppercase">Architecture</span>
                   <h2 className="text-[58px] font-black text-black mb-6 tracking-tight leading-tight">
                     Kt ds AI Solutions
                   </h2>
@@ -818,6 +819,7 @@ const App = () => {
         <section id="use-cases" className="py-32 bg-[#000000] relative">
           <div className="max-w-[1200px] mx-auto w-full min-h-[150vh] relative flex flex-col items-start px-6">
             <div className="w-full mb-6 pt-[80px]">
+              <span className="text-[#0885FE] font-bold text-[14px] tracking-widest block mb-5 uppercase">Use Case</span>
               <h2 className="text-[58px] font-black bg-gradient-to-r from-white via-white via-[40%] to-[#93C5FD] bg-clip-text text-transparent tracking-tight leading-[1.1] font-pretendard">
                 Solution, <br />
                 Multi Agent <br />
@@ -957,7 +959,7 @@ const App = () => {
         <section id="stats" className="py-32 px-6 bg-[#000000]">
           <div className="max-w-[1200px] mx-auto">
             <div className="text-center mb-32">
-
+              <span className="text-[#0885FE] font-bold text-[14px] tracking-widest block mb-5 uppercase">Trust</span>
               <h2 className="text-[58px] font-black bg-gradient-to-r from-white via-white via-[40%] to-[#93C5FD] bg-clip-text text-transparent mb-6 tracking-tight">
                 수치로 증명하는 Biz.AI
               </h2>
