@@ -54,7 +54,7 @@ export default function HeroContent({ onSubmit, isAnalyzing = false, align = 'ce
   const fullTitle = `${slide.main[0]}\n${slide.main[1]}`;
   const { displayed, done } = useTypingEffect(fullTitle, TYPING_SPEED_MS);
 
-  const rotateTimer = useRef<ReturnType<typeof setInterval>>();
+  const rotateTimer = useRef<ReturnType<typeof setInterval> | undefined>(undefined);
   const startRotation = useCallback(() => {
     clearInterval(rotateTimer.current);
     rotateTimer.current = setInterval(() => {

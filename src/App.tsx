@@ -22,6 +22,7 @@ import {
   Target,
   ShieldCheck,
   CheckCircle2,
+  ChevronLeft,
   ChevronRight,
   ChevronDown,
   ArrowRight,
@@ -43,6 +44,7 @@ import {
   ExternalLink,
   Utensils,
   Monitor,
+  Layers,
 } from 'lucide-react';
 
 // Sub-components (Moved to top for hoisting/scoping clarity)
@@ -51,7 +53,7 @@ const StudioCard = ({ icon, title, desc }: { icon: React.ReactElement; title: st
   <Card className="p-10 rounded-3xl bg-[#111] border-white/5 hover:bg-[#1a1a1a] hover:border-white/20 transition-all duration-500 group flex flex-col items-center md:items-start text-center md:text-left shadow-2xl relative overflow-hidden">
     <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full blur-2xl -mr-16 -mt-16 group-hover:bg-blue-500/20 transition-colors duration-500" />
     <div className="size-16 bg-white/5 rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform border border-white/10 relative z-10 text-white/80 group-hover:text-blue-400">
-      {React.cloneElement(icon, { size: 32 })}
+      {React.cloneElement(icon as any, { size: 32 })}
     </div>
     <h4 className="text-2xl font-bold text-white mb-4 relative z-10">{title}</h4>
     <p className="text-white/50 leading-relaxed font-medium relative z-10">{desc}</p>
@@ -377,12 +379,110 @@ const ProcessSection = () => {
   );
 };
 
+const StudioSection = () => {
+  return (
+    <section id="studio-v2" className="bg-[#000000] py-32 px-6">
+      <div className="max-w-[1200px] mx-auto">
+        {/* 메인 배너 카드 */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="relative h-[440px] w-full rounded-[40px] border border-white/5 overflow-hidden group mb-16"
+        >
+          {/* LightRays 배경 - 박스 없이 전체로 활용 */}
+          <div className="absolute inset-0 z-0">
+            <LightRays
+              raysOrigin="right"
+              raysColor="#3B82F6"
+              raysSpeed={0.15}
+              lightSpread={0.8}
+              rayLength={2}
+            />
+          </div>
+          <div className="absolute inset-0 bg-gradient-to-r from-black via-black/40 to-transparent z-[1]" />
+
+          <div className="relative z-10 pl-20 h-full flex flex-col justify-center max-w-2xl font-pretendard">
+            <h2 className="text-[52px] font-black bg-gradient-to-r from-white via-white via-[40%] to-[#93C5FD] bg-clip-text text-transparent mb-4 tracking-tight leading-tight">
+              AI Agent Studio
+            </h2>
+            <p className="text-white/80 text-[18px] leading-relaxed break-keep font-normal mb-8 max-w-xl">
+              필요한 Agent, Tool, MCP를 빠르게 확인하고 시작하세요.<br />
+              쉽게 개발 가능한 AI 아키텍처와 Delivery 가이드를 제공합니다.
+            </p>
+
+            <button className="w-[120px] h-[48px] text-[16px] font-medium border border-white/40 bg-transparent text-white rounded-lg transition-all group flex items-center justify-center p-0 hover:border-white/60 hover:bg-transparent">
+              <span>더보기</span>
+              <ChevronRight size={16} className="max-w-0 opacity-0 group-hover:max-w-[18px] group-hover:opacity-100 group-hover:ml-[2px] transition-all duration-300 overflow-hidden" />
+            </button>
+          </div>
+        </motion.div>
+
+        {/* 하단 4개 기능 카드 - Neubau 스타일 (다크 박스) */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          {[
+            {
+              title: "Agent 개발",
+              desc: "AI Agent 개발을 위한 통합 개발 환경과 도구를 제공합니다.",
+              icon: <Code className="text-white/80" strokeWidth={1.5} size={20} />
+            },
+            {
+              title: "Core Agent",
+              desc: "사전 개발된 Core Agent를 활용하여 빠른 프로토타이핑이 가능합니다.",
+              icon: <Cpu className="text-white/80" strokeWidth={1.5} size={20} />
+            },
+            {
+              title: "Use Case 패키징",
+              desc: "Use case 단위로 패키징된 솔루션을 통해 즉시 배포할 수 있습니다.",
+              icon: <Layers className="text-white/80" strokeWidth={1.5} size={20} />
+            },
+            {
+              title: "Delivery 가이드",
+              desc: "AI 아키텍처 소개 및 배포 가이드를 통해 안정적인 운영을 지원합니다.",
+              icon: <BookOpen className="text-white/80" strokeWidth={1.5} size={20} />
+            }
+          ].map((item, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.1, duration: 0.5 }}
+              className="rounded-[32px] border border-white/5 p-8 pt-4 transition-all duration-300 group hover:border-white/10"
+            >
+              <div className="size-10 rounded-full border border-white/10 flex items-center justify-center mb-8 group-hover:bg-white/5 transition-colors">
+                {item.icon}
+              </div>
+              <h3 className="text-white text-[20px] font-bold mb-2 tracking-tight">{item.title}</h3>
+              <p className="text-white/60 text-[15px] leading-relaxed break-keep font-normal">
+                {item.desc}
+              </p>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
 const App = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showTopBtn, setShowTopBtn] = useState(false);
   const [activeDomain, setActiveDomain] = useState<number>(0);
   const navigate = useNavigate();
   const { scrollY, scrollYProgress } = useScroll();
+  const newsScrollRef = useRef<HTMLDivElement>(null);
+
+  const scrollNews = (direction: 'left' | 'right') => {
+    if (newsScrollRef.current) {
+      const scrollAmount = 400; // 380px card + 24px gap
+      newsScrollRef.current.scrollBy({
+        left: direction === 'left' ? -scrollAmount : scrollAmount,
+        behavior: 'smooth'
+      });
+    }
+  };
 
 
   // Re-added clip path animation for the expanding background effect
@@ -481,8 +581,8 @@ const App = () => {
           </a>
 
           <div className="hidden lg:flex items-center gap-8 text-white/90 text-[14px] font-medium">
-            <Link to="/" className="hover:text-white transition-colors">멀티 에이전트 플랫폼</Link>
-            <a href="#use-cases" className="hover:text-white transition-colors">고객 사례</a>
+            <Link to="/platform" className="hover:text-white transition-colors">멀티 에이전트 플랫폼</Link>
+            <Link to="/use-cases" className="hover:text-white transition-colors">고객 사례</Link>
             <Link to="/news" className="hover:text-white transition-colors">새로운 소식</Link>
           </div>
 
@@ -510,8 +610,8 @@ const App = () => {
               className="lg:hidden absolute top-full left-0 right-0 bg-[#0a0a0a]/80 backdrop-blur-xl py-4 px-6 overflow-hidden border-b border-white/10"
             >
               <div className="flex flex-col gap-4">
-                <Link to="/" className="text-white/90 hover:text-white font-medium py-1" onClick={() => setIsMenuOpen(false)}>멀티 에이전트 플랫폼</Link>
-                <a href="#use-cases" className="text-white/90 hover:text-white font-medium py-1" onClick={() => setIsMenuOpen(false)}>고객 사례</a>
+                <Link to="/platform" className="text-white/90 hover:text-white font-medium py-1" onClick={() => setIsMenuOpen(false)}>멀티 에이전트 플랫폼</Link>
+                <Link to="/use-cases" className="text-white/90 hover:text-white font-medium py-1" onClick={() => setIsMenuOpen(false)}>고객 사례</Link>
                 <Link to="/news" className="text-white/90 hover:text-white font-medium py-1" onClick={() => setIsMenuOpen(false)}>새로운 소식</Link>
                 <div className="pt-2 mt-2 border-t border-white/10 flex flex-col gap-2">
                   <Button variant="ghost" size="sm" className="text-white/90 hover:text-white justify-start">
@@ -566,12 +666,9 @@ const App = () => {
             className="bg-[#F3F5FC] border border-black/5 relative z-20 overflow-hidden mb-20 smooth-gpu"
           >
             <section id="solution" className="py-32 px-6">
-              <div className="max-w-[1240px] mx-auto relative">
+              <div className="max-w-[1200px] mx-auto relative">
                 <div className="text-center mb-20 font-pretendard flex flex-col items-center relative z-10">
-                  <span className="text-[#FF2D2D] font-semibold text-[20px] mb-3 tracking-wide">
-                    Architecture
-                  </span>
-                  <h2 className="text-[52px] font-black text-black mb-6 tracking-tight leading-tight">
+                  <h2 className="text-[58px] font-black text-black mb-6 tracking-tight leading-tight">
                     Kt ds AI Solutions
                   </h2>
                   <p className="text-black/80 text-[18px] max-w-2xl mx-auto font-medium">
@@ -595,13 +692,13 @@ const App = () => {
                       },
                       {
                         image: "/logo_2.png",
-                        title: "works AI",
+                        title: "WorksAI",
                         desc: "AI Agent 기반으로 다양한 업무처리를 지원하는 사내 AI Agent Portal",
                         highlight: "#업무 효율 200% 향상"
                       },
                       {
                         image: "/logo_3.png",
-                        title: "cloudwiz",
+                        title: "CloudWiz",
                         desc: "클라우드 운영 효율화와 자동화를 지원하는 관리 서비스",
                         highlight: "#멀티 클라우드 비용 30% 절감"
                       }
@@ -628,19 +725,19 @@ const App = () => {
                     {[
                       {
                         image: "/logo_3.png",
-                        title: "cloudwiz",
+                        title: "CloudWiz",
                         desc: "클라우드 운영 효율화와 자동화를 지원하는 관리 서비스",
                         highlight: "#멀티 클라우드 비용 30% 절감"
                       },
                       {
-                        image: "/logo_4.png",
-                        title: "BEAST",
+                        image: "/logo_5.png",
+                        title: "Beast AI Gateway",
                         desc: "엔터프라이즈용 AI 기술, API를 통합 관리하는 솔루션",
                         highlight: "#안전한 AI API 통합 관리"
                       },
                       {
-                        image: "/logo_5.png",
-                        title: "CODEBOX",
+                        image: "/logo_4.png",
+                        title: "Codebox",
                         desc: "폐쇄형 설치형 AI 코드 개발 어플라이언스",
                         highlight: "#보안 특화 AI 개발 환경"
                       }
@@ -712,11 +809,10 @@ const App = () => {
           </div>
         </section>
 
-        <section id="use-cases" className="py-32 bg-[#0a0a0a] relative">
-          <div className="max-w-[1240px] mx-auto w-full min-h-[150vh] relative flex flex-col items-start px-6">
-            <div className="w-full mb-12 pt-[40px]">
-              <span className="text-[#FF2D2D] font-bold text-[20px] mb-4 block tracking-tight">Use Cases</span>
-              <h2 className="text-[64px] font-black bg-gradient-to-r from-white via-white via-[40%] to-[#93C5FD] bg-clip-text text-transparent tracking-tight leading-[1.1] font-pretendard">
+        <section id="use-cases" className="py-32 bg-[#000000] relative">
+          <div className="max-w-[1200px] mx-auto w-full min-h-[150vh] relative flex flex-col items-start px-6">
+            <div className="w-full mb-6 pt-[80px]">
+              <h2 className="text-[58px] font-black bg-gradient-to-r from-white via-white via-[40%] to-[#93C5FD] bg-clip-text text-transparent tracking-tight leading-[1.1] font-pretendard">
                 Solution, <br />
                 Multi Agent <br />
                 Use Cases
@@ -724,14 +820,14 @@ const App = () => {
             </div>
 
             <div className="w-full flex flex-col lg:flex-row items-start relative gap-0">
-              <div className="w-full lg:w-[42%] lg:sticky lg:top-0 lg:h-screen flex flex-col justify-center z-20 pr-12 lg:pr-16">
+              <div className="w-full lg:w-[42%] lg:sticky lg:top-0 lg:h-screen flex flex-col justify-start z-20 pr-12 lg:pr-16 pt-[100px]">
                 <div className="flex flex-col">
                   {useCaseItems.map((item, index) => {
                     const isActive = index === activeUseCase;
                     return (
                       <div key={item.id} className="group py-[23px] border-b border-white/10">
                         <h3
-                          className={`text-[28px] tracking-tight transition-all duration-500 cursor-pointer flex items-center gap-4 ${isActive ? 'text-white' : 'text-white/30 hover:text-white/50'}`}
+                          className={`text-[32px] tracking-tight transition-all duration-500 cursor-pointer flex items-center gap-4 ${isActive ? 'text-white' : 'text-white/30 hover:text-white/50'}`}
                           onClick={() => setActiveUseCase(index)}
                         >
                           <span className="font-bold">{item.titlePrefix}</span>
@@ -762,51 +858,30 @@ const App = () => {
                                     initial={{ y: 20, opacity: 0 }}
                                     animate={{ y: 0, opacity: 1 }}
                                     transition={{ delay: 0.2 }}
-                                    className="flex flex-wrap gap-2 mb-8"
+                                    className="flex flex-wrap gap-4 mb-8"
                                   >
                                     {item.tags.map((tag: string, i: number) => {
                                       return (
-                                        <span key={i} className="px-5 py-1.5 rounded-full text-[16px] font-medium border border-[#00AEFF]/30 text-[#00AEFF] bg-[#00AEFF]/5 shadow-none transition-none">
-                                          {tag}
+                                        <span key={i} className="text-[16px] font-medium text-[#00AEFF] transition-none">
+                                          # {tag}
                                         </span>
                                       );
                                     })}
                                   </motion.div>
                                 )}
 
-                                {item.features && (
-                                  <motion.div
-                                    initial={{ y: 20, opacity: 0 }}
-                                    animate={{ y: 0, opacity: 1 }}
-                                    transition={{ delay: 0.3 }}
-                                    className="bg-[#111111]/80 rounded-[20px] py-[20px] px-[16px] mb-4 border border-white/5"
-                                  >
-                                    <ul className="space-y-3">
-                                      {item.features.map((feature: string, i: number) => (
-                                        <motion.li
-                                          key={i}
-                                          initial={{ x: -10, opacity: 0 }}
-                                          animate={{ x: 0, opacity: 1 }}
-                                          transition={{ delay: 0.4 + i * 0.1 }}
-                                          className="flex items-start gap-3 text-white/90 text-[16px] leading-snug font-light"
-                                        >
-                                          <div className="w-1 h-1 rounded-full bg-white mt-2.5 shrink-0" />
-                                          <span className="text-[16px] text-white/80 font-normal">{feature}</span>
-                                        </motion.li>
-                                      ))}
-                                    </ul>
-                                  </motion.div>
-                                )}
 
-                                <motion.a
-                                  href="#"
-                                  initial={{ opacity: 0 }}
-                                  animate={{ opacity: 1 }}
-                                  transition={{ delay: 0.6 }}
-                                  className="text-white/80 text-[15px] font-normal hover:text-white transition-colors flex items-center gap-1 mt-4"
-                                >
-                                  더보기 &gt;
-                                </motion.a>
+
+                                <Link to="/use-cases">
+                                  <motion.button
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    transition={{ delay: 0.6 }}
+                                    className="mt-6 w-[80px] h-[36px] rounded-lg border border-white/40 text-white text-[15px] font-medium transition-all group flex items-center justify-center gap-0 hover:border-white/60 p-0"
+                                  >
+                                    <span>더보기</span><ChevronRight size={16} className="max-w-0 opacity-0 group-hover:max-w-[18px] group-hover:opacity-100 group-hover:ml-[2px] transition-all duration-300 overflow-hidden" />
+                                  </motion.button>
+                                </Link>
                               </div>
                             </motion.div>
                           )}
@@ -825,25 +900,16 @@ const App = () => {
             </div>
 
             <div className="w-full flex justify-center -mt-16 relative z-30">
-              <Button
-                className="h-12 w-[240px] text-[16px] font-normal bg-white/5 backdrop-blur-md text-white hover:bg-white/10 rounded-full transition-all duration-300 hover:scale-105 active:scale-95 group flex items-center justify-center relative overflow-hidden"
-              >
-                <span className="transition-transform duration-300 group-hover:-translate-x-2">
-                  AI Agent / Solution 더보기
-                </span>
-                <ArrowUp
-                  size={16}
-                  className="absolute right-8 opacity-0 group-hover:opacity-100 group-hover:right-6 transition-all duration-300 rotate-45"
-                />
-              </Button>
+              <Link to="/use-cases">
+                <Button
+                  className="w-[220px] h-[48px] text-[16px] font-medium border border-white/40 bg-transparent text-white rounded-lg transition-all group flex items-center justify-center p-0 hover:border-white/60 hover:bg-transparent"
+                >
+                  <span>AI Agent / Solution 더보기</span><ChevronRight size={16} className="max-w-0 opacity-0 group-hover:max-w-[18px] group-hover:opacity-100 group-hover:ml-[2px] transition-all duration-300 overflow-hidden" />
+                </Button>
+              </Link>
             </div>
           </div>
-        </section>
-
-        <ProcessSection />
-
-
-        <section id="logos" className="relative py-12 bg-[#0a0a0a] overflow-hidden">
+        </section>\n\n        <ProcessSection />\n\n\n        <section id="logos" className="relative py-12 bg-[#000000] overflow-hidden">
           <div className="relative z-10 max-w-[1200px] mx-auto px-6 text-center">
             <div className="relative overflow-hidden w-full py-4">
               <motion.div
@@ -882,11 +948,11 @@ const App = () => {
           </div>
         </section>
 
-        <section id="stats" className="py-32 px-6 bg-[#0a0a0a]">
-          <div className="max-w-[1240px] mx-auto">
+        <section id="stats" className="py-32 px-6 bg-[#000000]">
+          <div className="max-w-[1200px] mx-auto">
             <div className="text-center mb-32">
-              <span className="text-red-600 text-[20px] font-bold mb-4 block tracking-wider">Trust</span>
-              <h2 className="text-[52px] font-black bg-gradient-to-r from-white via-white via-[40%] to-[#93C5FD] bg-clip-text text-transparent mb-8 tracking-tight">
+
+              <h2 className="text-[58px] font-black bg-gradient-to-r from-white via-white via-[40%] to-[#93C5FD] bg-clip-text text-transparent mb-6 tracking-tight">
                 수치로 증명하는 Biz.AI
               </h2>
               <p className="text-white/80 text-[18px] max-w-3xl mx-auto font-normal">
@@ -914,7 +980,7 @@ const App = () => {
           </div>
         </section>
 
-        <section id="testimonials" className="py-24 px-6 bg-[#0a0a0a] relative">
+        <section id="testimonials" className="py-24 px-6 bg-[#000000] relative">
           <div className="max-w-[1000px] mx-auto">
             <div className="max-w-[1000px] mx-auto relative group">
               <div className="columns-1 md:columns-2 lg:columns-3 gap-3 space-y-3">
@@ -959,84 +1025,100 @@ const App = () => {
               </div>
 
               {/* 바닥 그라데이션 페이드 아웃 */}
-              <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/80 to-transparent z-20 pointer-events-none" />
+              <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-[#000000] via-[#000000]/80 to-transparent z-20 pointer-events-none" />
             </div>
           </div>
         </section>
 
-        {/* 새로운 소식 섹션 */}
-        <section id="news" className="py-32 px-6 bg-[#0a0a0a] relative">
-          <div className="max-w-[1200px] mx-auto">
-            {/* 헤더: 타이틀 중앙 정렬 및 스타일 통일 */}
-            <div className="flex flex-col items-center text-center mb-16">
-              <span className="text-[#FF4D4D] font-bold text-[14px] mb-4 tracking-[0.2em] uppercase">News</span>
-              <h2 className="text-[52px] font-bold bg-gradient-to-r from-white via-white via-[40%] to-[#93C5FD] bg-clip-text text-transparent mb-6 tracking-tight leading-tight">
-                새로운 소식
-              </h2>
-              <p className="text-white/70 text-[18px] max-w-2xl font-medium leading-relaxed">
-                Biz.AI가 전하는 최신 업데이트와 인사이트를 확인하세요.
-              </p>
-            </div>
+        {/* 새로운 소식 섹션: 우측 블리드(Bleed) 레이아웃 */}
+        <section id="news" className="py-32 bg-[#000000] relative">
+          {/* 헤더 영역: 컨테이너 내부 */}
+          <div className="max-w-[1200px] mx-auto px-6 mb-16">
+            <div className="flex justify-between items-center">
+              <div className="flex flex-col items-start text-left">
+                <h2 className="text-[58px] font-bold bg-gradient-to-r from-white via-white via-[40%] to-[#93C5FD] bg-clip-text text-transparent mb-6 tracking-tight leading-tight">
+                  새로운 소식
+                </h2>
+                <p className="text-white/70 text-[18px] max-w-2xl font-medium leading-relaxed">
+                  Biz.AI가 전하는 최신 업데이트와 인사이트를 확인하세요.
+                </p>
+              </div>
 
-            {/* 뉴스 카드 그리드 */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mb-10">
-              {[
-                { title: "AI Agent Builder\nAI:ON-U 정식 출시", date: "Feb 20, 2026", tag: "Product", image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=800" },
-                { title: "Enterprise RAG\n엔진 2.0 업데이트", date: "Jan 15, 2026", tag: "Product", image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&q=80&w=800" },
-                { title: "Kt ds, AI Agent\n도입 사례 공개", date: "Dec 22, 2025", tag: "Case Study", image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=800" },
-                { title: "2025 AI Trends\nReport 발간", date: "Nov 30, 2025", tag: "Insight", image: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=800" }
-              ].map((news, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ y: 40, opacity: 0 }}
-                  whileInView={{ y: 0, opacity: 1 }}
-                  transition={{ delay: i * 0.1, duration: 0.5 }}
-                  viewport={{ once: false }}
-                  className="group cursor-pointer"
-                  onClick={() => navigate(`/news/${i + 1}`, { state: { news } })}
+              {/* 내비게이션 버튼 (우측 상단) */}
+              <div className="flex gap-3 mb-2">
+                <button
+                  onClick={() => scrollNews('left')}
+                  className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center text-white/40 hover:text-white hover:border-white/40 transition-all bg-white/5 hover:bg-white/10"
                 >
-                  {/* 썸네일 */}
-                  <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden mb-5 bg-zinc-900 border border-white/5 shadow-2xl">
-                    <motion.img
-                      src={news.image}
-                      alt={news.title}
-                      className="w-full h-full object-cover transition-all duration-700"
-                      whileHover={{ scale: 1.1 }}
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-40" />
-                  </div>
-
-                  {/* 텍스트 */}
-                  <div className="flex flex-col">
-                    <span className="text-blue-400 text-[14px] font-bold mb-3">{news.tag}</span>
-                    <h3 className="text-white text-[18px] font-bold leading-snug mb-3 whitespace-pre-line group-hover:text-blue-400 transition-colors">
-                      {news.title}
-                    </h3>
-                    <span className="text-white/40 text-[14px] font-medium">{news.date}</span>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-
-            {/* 더보기 버튼 하단 중앙 배치 */}
-            <div className="flex flex-col items-center mt-12">
-              <Link to="/news">
-                <button className="group relative px-12 py-4 rounded-full bg-white/5 text-white text-[16px] font-bold hover:bg-white hover:text-black transition-all duration-300 flex items-center justify-center overflow-hidden">
-                  <span className="relative flex items-center transition-transform duration-300 group-hover:-translate-x-2">
-                    전체 소식 더보기
-                    <ArrowRight
-                      size={18}
-                      className="absolute left-full ml-2 opacity-0 group-hover:opacity-100 transition-all duration-300"
-                    />
-                  </span>
+                  <ChevronLeft size={24} />
                 </button>
-              </Link>
+                <button
+                  onClick={() => scrollNews('right')}
+                  className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center text-white/40 hover:text-white hover:border-white/40 transition-all bg-white/5 hover:bg-white/10"
+                >
+                  <ChevronRight size={24} />
+                </button>
+              </div>
             </div>
+          </div>
+
+          {/* 뉴스 카드 리스트: 타이틀 정렬 + 우측 블리드 */}
+          <div
+            ref={newsScrollRef}
+            className="flex gap-6 overflow-x-auto no-scrollbar scroll-smooth pb-12 pl-[calc(max(24px,(100vw-1200px)/2+24px))] pr-6"
+          >
+            {[
+              { title: "AI Agent Builder\nAI:ON-U 정식 출시", date: "Feb 20, 2026", tag: "Product", image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=800" },
+              { title: "Enterprise RAG\n엔진 2.0 업데이트", date: "Jan 15, 2026", tag: "Product", image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&q=80&w=800" },
+              { title: "Kt ds, AI Agent\n도입 사례 공개", date: "Dec 22, 2025", tag: "Case Study", image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=800" },
+              { title: "2025 AI Trends\nReport 발간", date: "Nov 30, 2025", tag: "Insight", image: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=800" },
+              { title: "AI Agent Builder\nAI:ON-U 정식 출시", date: "Feb 20, 2026", tag: "Product", image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=800" },
+              { title: "Enterprise RAG\n엔진 2.0 업데이트", date: "Jan 15, 2026", tag: "Product", image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&q=80&w=800" }
+            ].map((news, i) => (
+              <motion.div
+                key={i}
+                initial={{ y: 20, opacity: 0 }}
+                whileInView={{ y: 0, opacity: 1 }}
+                transition={{ delay: i * 0.1, duration: 0.5 }}
+                viewport={{ once: true }}
+                className="group cursor-pointer shrink-0 w-[380px]"
+                onClick={() => navigate(`/news/${(i % 4) + 1}`, { state: { news } })}
+              >
+                {/* 썸네일: 380 * 240 사이즈 */}
+                <div className="relative w-full aspect-[380/240] rounded-2xl overflow-hidden mb-5 bg-zinc-900 border border-white/5 shadow-2xl">
+                  <motion.img
+                    src={news.image}
+                    alt={news.title}
+                    className="w-full h-full object-cover transition-all duration-700"
+                    whileHover={{ scale: 1.1 }}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-40" />
+                </div>
+
+                {/* 텍스트 */}
+                <div className="flex flex-col px-1">
+                  <span className="text-blue-400 text-[14px] font-bold mb-3">{news.tag}</span>
+                  <h3 className="text-white text-[24px] font-bold leading-snug mb-3 whitespace-pre-line group-hover:text-blue-400 transition-colors">
+                    {news.title}
+                  </h3>
+                  <span className="text-white/40 text-[14px] font-medium">{news.date}</span>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* 더보기 버튼: 중앙 정렬 */}
+          <div className="flex justify-center mt-8">
+            <Link to="/news">
+              <button className="w-[120px] h-[48px] text-[16px] font-medium border border-white/40 bg-transparent text-white rounded-lg transition-all group flex items-center justify-center p-0 hover:border-white/60 hover:bg-transparent">
+                <span>전체보기</span><ChevronRight size={16} className="max-w-0 opacity-0 group-hover:max-w-[18px] group-hover:opacity-100 group-hover:ml-[2px] transition-all duration-300 overflow-hidden" />
+              </button>
+            </Link>
           </div>
         </section>
 
         {/* FAQ 섹션 */}
-        <section id="faq" className="py-24 px-6 bg-[#0a0a0a] relative overflow-hidden">
+        <section id="faq" className="py-24 px-6 bg-[#000000] relative overflow-hidden">
           <div className="max-w-[1200px] mx-auto">
             <div className="flex flex-col lg:flex-row gap-20">
               {/* 왼쪽: 헤더 */}
@@ -1120,112 +1202,30 @@ const App = () => {
 
 
         {/* AI Agent 스튜디오 섹션 */}
-        <section id="studio-v2" className="py-32 px-6 bg-[#0a0a0a]">
-          <div className="max-w-[1200px] mx-auto">
-            {/* 메인 CTA 카드 - 파티클 배경 */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: false }}
-              transition={{ duration: 0.8 }}
-              className="relative rounded-[40px] overflow-hidden bg-[#0A0A0A] border border-white/5 mb-8 h-[500px] flex items-center group"
-            >
-              <div className="absolute inset-0 w-full h-full">
-                <LightRays
-                  raysOrigin="right"
-                  raysColor="#0aa1ff"
-                  raysSpeed={0.4}
-                  lightSpread={1.5}
-                  rayLength={5}
-                  followMouse={true}
-                  mouseInfluence={0.2}
-                  noiseAmount={0}
-                  distortion={0.1}
-                  className="custom-rays"
-                  pulsating={true}
-                  fadeDistance={1}
-                  saturation={1.2}
-                />
-              </div>
-              <div className="absolute inset-0 bg-gradient-to-r from-black/95 via-black/40 to-transparent z-[1]" />
+        <StudioSection />
 
-              <div className="relative z-10 pl-16 md:pl-24 max-w-2xl font-pretendard">
-                <h2 className="text-[44px] font-black bg-gradient-to-r from-white via-white via-[40%] to-[#93C5FD] bg-clip-text text-transparent mb-6 tracking-tight leading-tight">
-                  AI Agent 스튜디오
-                </h2>
-                Neubau
-                <p className="text-white/80 text-[20px] mb-4 leading-relaxed break-keep font-medium">
-                  필요한 Agent, Tool, MCP를 빠르게 확인하고 시작하세요.<br />
-                  쉽게 개발 가능한 AI 아키텍처와 Delivery 가이드를 제공합니다.
-                </p>
-
-                <button className="mt-8 flex items-center gap-2 px-8 py-3.5 rounded-full border border-white/20 text-white/90 font-bold text-sm hover:bg-white/5 transition-all group/btn">
-                  더보기 &gt;
-                </button>
-              </div>
-            </motion.div>
-
-            {/* 3개 기능 카드 */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {[
-                {
-                  title: "Agent 개발",
-                  desc: "AI Agent 개발을 위한 통합 개발 환경과 도구를 제공합니다.",
-                  icon: <Code className="text-white/80" strokeWidth={1.5} size={20} />
-                },
-                {
-                  title: "Core Agent",
-                  desc: "사전 개발된 Core Agent를 활용하여 빠른 프로토타이핑이 가능합니다.",
-                  icon: <Cpu className="text-white/80" strokeWidth={1.5} size={20} />
-                },
-                {
-                  title: "Core Agent",
-                  desc: "사전 개발된 Core Agent를 활용하여 빠른 프로토타이핑이 가능합니다.",
-                  icon: <Cpu className="text-white/80" strokeWidth={1.5} size={20} />
-                }
-              ].map((item, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: false }}
-                  transition={{ delay: i * 0.1, duration: 0.5 }}
-                  className="bg-[#0A0A0A] border border-white/5 rounded-[32px] p-10 hover:border-white/10 transition-all duration-300"
-                >
-                  <div className="size-10 rounded-full bg-white/5 flex items-center justify-center mb-8">
-                    {item.icon}
-                  </div>
-                  <h3 className="text-white text-xl font-bold mb-4">{item.title}</h3>
-                  <p className="text-white/60 text-[16px] leading-relaxed break-keep font-normal">
-                    {item.desc}
-                  </p>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* CTA 배너 - Full Width (Premium Aurora Style) */}
+        {/* CTA 배너 - Full Width (Premium Aurora Style) 복구 */}
         <div className="w-full py-0">
           <section className="relative h-[500px] w-full overflow-hidden flex items-center justify-center bg-black border-y border-white/5">
-            <div className="absolute inset-0 z-0">
-              <Aurora
-                colorStops={["#66fcff", "#ff7a7a", "#0f5fff"]}
-                blend={0.5}
-                amplitude={1.0}
-                speed={1}
+            <div className="absolute inset-0 z-0 flex items-center justify-center opacity-60">
+              <Silk
+                speed={5}
+                scale={0.6}
+                color="#5d7cda"
+                noiseIntensity={2.5}
+                rotation={1.2}
               />
             </div>
-            <div className="relative z-10 w-full max-w-[1240px] mx-auto text-center font-pretendard px-6 py-20">
+            <div className="relative z-10 w-full max-w-[1200px] mx-auto text-center font-pretendard px-6 py-20">
               <motion.div
                 initial={{ opacity: 0, scale: 0.95 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: false }}
                 transition={{ duration: 1, ease: "easeOut" }}
               >
-                <p className="text-white text-[48px] font-bold mb-0 tracking-tighter bg-gradient-to-b from-white to-white/60 bg-clip-text text-transparent">Biz.AI</p>
-                <h2 className="text-white text-[48px] font-extrabold mb-10 tracking-tighter leading-tight drop-shadow-[0_0_25px_rgba(255,255,255,0.2)]">
-                  지금바로 시작해보세요.
+                <h2 className="text-white text-[48px] font-extrabold mb-10 tracking-tighter leading-[1.2] drop-shadow-[0_0_25px_rgba(255,255,255,0.2)]">
+                  Biz.AI와 함께<br />
+                  AI 혁신을 지금 실행하세요.
                 </h2>
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                   <Button
@@ -1247,7 +1247,7 @@ const App = () => {
         </div>
 
         {/* 풋터 */}
-        <footer className="bg-[#0a0a0a] py-32 px-6 border-t border-white/5">
+        <footer className="bg-[#000000] py-32 px-6 border-t border-white/5">
           <div className="max-w-[1200px] mx-auto">
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-12 mb-24">
               <div className="flex flex-col">

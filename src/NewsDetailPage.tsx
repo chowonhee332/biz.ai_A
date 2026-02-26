@@ -23,7 +23,7 @@ export default function NewsDetailPage() {
         <div className="min-h-screen bg-[#0a0a0a] text-white font-pretendard flex flex-col">
             {/* GNB (Header) */}
             <nav className="fixed w-full z-50 bg-[#0a0a0a]/80 backdrop-blur-xl py-4 px-6 md:px-10 border-b border-white/5">
-                <div className="max-w-[1200px] mx-auto flex justify-between items-center">
+                <div className="max-w-[1200px] mx-auto flex justify-between items-center px-6 md:px-0">
                     {/* Logo */}
                     <Link to="/" className="flex items-center gap-2 shrink-0">
                         <img src="/bizai_logo.png" alt="Biz.AI Logo" className="h-6 w-auto" />
@@ -33,7 +33,7 @@ export default function NewsDetailPage() {
                     {/* Desktop Menu */}
                     <div className="hidden lg:flex items-center gap-8 text-white/90 text-[14px] font-medium">
                         <Link to="/" className="hover:text-white transition-colors">멀티 에이전트 플랫폼</Link>
-                        <Link to="/#use-cases" className="hover:text-white transition-colors">고객 사례</Link>
+                        <Link to="/use-cases" className="hover:text-white transition-colors">고객 사례</Link>
                         <Link to="/news" className="text-white font-semibold">새로운 소식</Link>
                     </div>
 
@@ -62,7 +62,7 @@ export default function NewsDetailPage() {
                         >
                             <div className="flex flex-col gap-4">
                                 <Link to="/" className="text-white/90 hover:text-white font-medium py-1" onClick={() => setIsMenuOpen(false)}>멀티 에이전트 플랫폼</Link>
-                                <Link to="/#use-cases" className="text-white/90 hover:text-white font-medium py-1" onClick={() => setIsMenuOpen(false)}>고객 사례</Link>
+                                <Link to="/use-cases" className="text-white/90 hover:text-white font-medium py-1" onClick={() => setIsMenuOpen(false)}>고객 사례</Link>
                                 <Link to="/news" className="text-white font-semibold py-1" onClick={() => setIsMenuOpen(false)}>새로운 소식</Link>
                                 <div className="pt-2 mt-2 border-t border-white/10 flex flex-col gap-2">
                                     <Button variant="ghost" size="sm" className="text-white/90 hover:text-white justify-start">

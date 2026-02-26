@@ -4,7 +4,7 @@ import React from 'react';
 const StudioCard = ({ icon, title, desc }: { icon: React.ReactNode, title: string, desc: string }) => (
   <div className="bg-[var(--color-surface)] p-10 rounded-[2rem] border border-[var(--color-outline)]/10 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all group flex flex-col items-center md:items-start text-center md:text-left">
     <div className="w-14 h-14 bg-[var(--color-secondary-container)] text-[var(--color-on-secondary-container)] rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-      {React.cloneElement(icon as React.ReactElement, { size: 28 })}
+      {React.cloneElement(icon as any, { size: 28 })}
     </div>
     <h4 className="text-xl font-bold text-[var(--color-on-surface)] mb-4">{title}</h4>
     <p className="text-sm text-[var(--color-on-surface-variant)] leading-relaxed">{desc}</p>
