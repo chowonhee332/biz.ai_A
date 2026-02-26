@@ -333,7 +333,7 @@ const ProcessSection = () => {
         <section id="process" className="py-32 px-6 relative overflow-hidden">
           <div className="max-w-[1240px] mx-auto relative z-10">
             <div className="text-center mb-24">
-              <span className="text-red-600 text-[20px] font-bold mb-4 block tracking-wider">Why kt ds</span>
+              <span className="text-[#0885FE] text-[20px] font-bold mb-4 block tracking-wider">Why kt ds</span>
               <h2 className="text-[52px] font-black text-black mb-6 tracking-tight leading-tight">
                 왜 KT DS와 함께 해야 할까요?
               </h2>
@@ -345,10 +345,10 @@ const ProcessSection = () => {
 
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-3">
               {[
-                { num: "01", title: "분석/설계", subtitle: "Retriever,\nAnalyst", desc: "데이터 협의체를 통해 데이터 분석 및 선별 이를 기반으로 RAG 및 Agent 구현에 최적화된 체계 구축\n원인 분석, 옵션 비교, 리스크/영향 평가, 계획 수립", color: "text-red-500" },
-                { num: "02", title: "개발/구현", subtitle: "Writer,\nExecutor", desc: "Enterprise 맞춤형 워크플로우 생성 및 RAG 엔진 기반 지식 증강 최적화\n원인 분석, 옵션 비교, 리스크/영향 평가, 계획 수립", color: "text-red-500" },
-                { num: "03", title: "검증/테스트", subtitle: "Validator,\nQuality", desc: "답변 정확도 및 안정성 검증을 위한 자동화 테스트와 멀티 레벨 QA 수행\n원인 분석, 옵션 비교, 리스크/영향 평가, 계획 수립", color: "text-red-500" },
-                { num: "04", title: "운영/안정화", subtitle: "Maintainer,\nSRE", desc: "실시간 모니터링 및 성능 최적화를 통해 멈춤 없는 엔터프라이즈 AI 환경 제공\n원인 분석, 옵션 비교, 리스크/영향 평가, 계획 수립", color: "text-red-500" }
+                { num: "01", title: "분석/설계", subtitle: "Retriever,\nAnalyst", desc: "데이터 협의체를 통해 데이터 분석 및 선별 이를 기반으로 RAG 및 Agent 구현에 최적화된 체계 구축\n원인 분석, 옵션 비교, 리스크/영향 평가, 계획 수립", color: "text-[#0885FE]" },
+                { num: "02", title: "개발/구현", subtitle: "Writer,\nExecutor", desc: "Enterprise 맞춤형 워크플로우 생성 및 RAG 엔진 기반 지식 증강 최적화\n원인 분석, 옵션 비교, 리스크/영향 평가, 계획 수립", color: "text-[#0885FE]" },
+                { num: "03", title: "검증/테스트", subtitle: "Validator,\nQuality", desc: "답변 정확도 및 안정성 검증을 위한 자동화 테스트와 멀티 레벨 QA 수행\n원인 분석, 옵션 비교, 리스크/영향 평가, 계획 수립", color: "text-[#0885FE]" },
+                { num: "04", title: "운영/안정화", subtitle: "Maintainer,\nSRE", desc: "실시간 모니터링 및 성능 최적화를 통해 멈춤 없는 엔터프라이즈 AI 환경 제공\n원인 분석, 옵션 비교, 리스크/영향 평가, 계획 수립", color: "text-[#0885FE]" }
               ].map((step, i) => (
                 <motion.div
                   key={i}
@@ -764,7 +764,7 @@ const App = () => {
         <section id="domain" className="py-32 px-6 relative overflow-hidden bg-[#0a0a0a] pb-16">
           <div className="max-w-[1200px] mx-auto">
             <div className="text-left mb-16 font-pretendard">
-              <span className="text-[#FF0000] font-bold text-[20px] mb-4 block tracking-tight">Multi Agent</span>
+              <span className="text-[#0885FE] font-bold text-[20px] mb-4 block tracking-tight">Multi Agent</span>
               <h2 className="text-[52px] font-black bg-gradient-to-r from-white via-white via-[40%] to-[#93C5FD] bg-clip-text text-transparent mb-6 tracking-tight">도메인별 Multi Agent</h2>
               <p className="text-white/80 text-[18px] font-normal tracking-tight">공공/금융 등 도메인별로 KTDS의 Multi-Agent를 활용해 보세요.</p>
             </div>
@@ -970,7 +970,7 @@ const App = () => {
                 <div key={i} className="flex flex-col items-start font-pretendard">
                   <div className="text-[80px] font-medium text-white tracking-tighter leading-none mb-12">
                     <AnimatedCounter from={0} to={stat.value} />
-                    <span className="text-red-500 ml-1">{stat.suffix}</span>
+                    <span className="text-[#0885FE] ml-1">{stat.suffix}</span>
                   </div>
                   <span className="text-white text-[18px] font-bold mb-1">{stat.label}</span>
                   <p className="text-white/80 text-[16px] leading-relaxed font-normal break-keep">{stat.sub}</p>
