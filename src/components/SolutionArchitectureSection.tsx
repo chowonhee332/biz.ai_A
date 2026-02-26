@@ -40,13 +40,13 @@ const LayerGraphic = ({ activeStep }: { activeStep: number }) => {
     ];
 
     return (
-        // Increased max-w and added scale to make the cube 2x larger visually
-        <div className="relative w-full aspect-square max-w-[800px] lg:scale-[1.3] flex items-center justify-center transform lg:translate-x-16 pointer-events-none">
+        // Used natural aspect ratio, scaled the SVG for larger size and adjusted padding to firmly root it vertically in center
+        <div className="relative w-full max-w-[800px] lg:scale-[1.25] flex items-center justify-center transform lg:translate-x-12 pointer-events-none">
             <svg
-                viewBox="-220 -280 440 600"
+                viewBox="-240 -260 480 480"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
-                className="w-full h-full drop-shadow-2xl"
+                className="w-full h-auto drop-shadow-2xl"
             >
                 <g stroke="#000000" strokeWidth="4" strokeLinejoin="round">
                     {[0, 1, 2, 3].map((layerIndex) => {
@@ -72,25 +72,11 @@ const LayerGraphic = ({ activeStep }: { activeStep: number }) => {
                             <g key={layerIndex} className="transition-all duration-500 ease-in-out">
                                 {/* Top Face (Only drawn for the very top layer, but colored differently if the whole stack is lit) */}
                                 {layerIndex === 0 && (
-                                    <g>
-                                        <polygon
-                                            points={topFace}
-                                            fill={isHighlight ? "#4da2ff" : "#e5e7eb"}
-                                            className="transition-colors duration-500"
-                                        />
-                                        <text
-                                            x="0"
-                                            y="-12"
-                                            fill={isHighlight ? "#ffffff" : "#888888"}
-                                            fontSize="64"
-                                            fontWeight="bold"
-                                            textAnchor="middle"
-                                            transform={`translate(0, ${yOff - dy}) scale(1, 0.577) rotate(-45)`}
-                                            className="transition-colors duration-500"
-                                        >
-                                            Kt ds
-                                        </text>
-                                    </g>
+                                    <polygon
+                                        points={topFace}
+                                        fill={isHighlight ? "#4da2ff" : "#e5e7eb"}
+                                        className="transition-colors duration-500"
+                                    />
                                 )}
 
                                 {/* Left Face */}
@@ -108,23 +94,29 @@ const LayerGraphic = ({ activeStep }: { activeStep: number }) => {
                                 />
 
                                 {/* Text Label on Left Face */}
-                                <text
-                                    x={-dx + 16} // positioned near the left edge
-                                    y={yOff + h * 0.5 - dy * 0.5 + 4} // vertically center aligned
-                                    fill={isHighlight ? '#ffffff' : '#555555'}
-                                    fontSize="22"
-                                    fontWeight="bold"
-                                    textAnchor="start" // Ensure flush formatting
-                                    transform="skewY(30)"
-                                    className="transition-colors duration-500"
-                                    stroke="none"
-                                >
-                                    {labelText.split('\n').map((line, i, arr) => (
-                                        <tspan x={-dx + 16} dy={i === 0 ? (arr.length > 1 ? -12 : 0) : 26} key={i}>
-                                            {line}
-                                        </tspan>
-                                    ))}
-                                </text>
+                                {/* Translating to the left center edge, and applying perfect skew matching the geometric angles */}
+                                <g transform={`translate(${-dx + 28}, ${yOff - dy + h * 0.5}) skewY(30)`}>
+                                    <text
+                                        fill={isHighlight ? '#ffffff' : '#666666'}
+                                        fontSize="22"
+                                        fontWeight="bold"
+                                        dominantBaseline="central"
+                                        className="transition-colors duration-500"
+                                        stroke="none"
+                                    >
+                                        {labelText.split('\n').map((line, i, arr) => {
+                                            let yPos = 0;
+                                            if (arr.length > 1) {
+                                                yPos = i === 0 ? -12 : 14;
+                                            }
+                                            return (
+                                                <tspan x="0" y={yPos} key={i}>
+                                                    {line}
+                                                </tspan>
+                                            );
+                                        })}
+                                    </text>
+                                </g>
                             </g>
                         );
                     })}
@@ -172,42 +164,44 @@ export default function SolutionArchitectureSection() {
 
                     {/* Left Text Content */}
                     <div className="w-full lg:w-5/12 flex flex-col justify-center relative z-10">
-                        <div className="mb-14">
-                            <span className="text-[#0885FE] font-bold text-[16px] tracking-widest block mb-4 uppercase">Architecture</span>
-                            <h2 className="text-[48px] lg:text-[56px] font-black text-white tracking-tight leading-tight">
-                                Kt ds AI Solution
-                            </h2>
-                        </div>
 
                         {/* Scrolling / Masked Viewport */}
                         <div
-                            className="relative h-[320px] overflow-hidden"
+                            className="relative h-[650px] overflow-hidden"
                             style={{
-                                WebkitMaskImage: 'linear-gradient(to bottom, black 50%, transparent 100%)',
-                                maskImage: 'linear-gradient(to bottom, black 50%, transparent 100%)'
+                                WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 15%, black 65%, transparent 100%)',
+                                maskImage: 'linear-gradient(to bottom, transparent 0%, black 15%, black 65%, transparent 100%)'
                             }}
                         >
                             <motion.div
-                                className="flex flex-col absolute w-full"
-                                animate={{ y: -(activeStep * 150) }}
+                                className="flex flex-col absolute w-full top-[100px]"
+                                animate={{ y: -(activeStep * 240) }}
                                 transition={{ type: "spring", stiffness: 100, damping: 25 }}
                             >
+                                {/* Header section included in the scroll */}
+                                <div className={`mb-12 transition-all duration-500 pl-6 ${activeStep > 0 ? 'opacity-0' : 'opacity-100'}`}>
+                                    <span className="text-[#0885FE] font-bold text-[16px] tracking-widest block mb-4 uppercase">Architecture</span>
+                                    <h2 className="text-[48px] lg:text-[56px] font-black text-white tracking-tight leading-tight">
+                                        Kt ds AI Solution
+                                    </h2>
+                                </div>
+
                                 {steps.map((step, index) => {
                                     const isActive = activeStep === index;
                                     return (
                                         <div
                                             key={index}
-                                            className={`h-[150px] flex-shrink-0 transition-all duration-500 ${isActive ? 'opacity-100 pl-6 border-l-4 border-[#0885FE]' : 'opacity-20 pl-6 border-l-4 border-transparent'}`}
+                                            className={`h-[240px] flex-shrink-0 transition-all duration-500 ${isActive ? 'opacity-100 pl-6 border-l-4 border-[#0885FE]' : 'opacity-20 pl-6 border-l-4 border-[#333333]'}`}
                                         >
-                                            <div className={`text-[28px] font-bold mb-1 transition-colors duration-500 ${isActive ? 'text-[#0885FE]' : 'text-[#888888]'}`}>
+                                            <div className={`text-[32px] font-bold mb-2 transition-colors duration-500 ${isActive ? 'text-[#0885FE]' : 'text-[#666666]'}`}>
                                                 {step.num}
                                             </div>
-                                            <h3 className={`text-[26px] font-bold mb-3 transition-colors duration-500 ${isActive ? 'text-white' : 'text-[#888888]'}`}>{step.title}</h3>
-                                            <div className="text-[18px] whitespace-pre-line leading-relaxed">
+                                            <h3 className={`text-[28px] font-bold mb-4 transition-colors duration-500 ${isActive ? 'text-white' : 'text-[#666666]'}`}>{step.title}</h3>
+                                            <div className="text-[20px] whitespace-pre-line leading-relaxed">
                                                 {step.desc.split('\n').map((line, i) => (
-                                                    <div key={i} className="flex items-center gap-2">
+                                                    <div key={i} className="flex items-center gap-3">
                                                         <span className="text-[#0885FE]">•</span>
-                                                        <span className={isActive ? 'text-gray-300' : 'text-[#555555]'}>{line}</span>
+                                                        <span className={isActive ? 'text-gray-300' : 'text-[#444444]'}>{line}</span>
                                                     </div>
                                                 ))}
                                             </div>
