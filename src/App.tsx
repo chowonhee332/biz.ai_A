@@ -762,7 +762,10 @@ const App = () => {
           </motion.div>
         </div>
 
-        <SolutionArchitectureSection />
+        {/* 임시 hide 처리 */}
+        <div className="hidden">
+          <SolutionArchitectureSection />
+        </div>
 
         <section id="domain" className="py-32 px-6 relative overflow-hidden bg-[#0a0a0a] pb-16">
           <div className="max-w-[1200px] mx-auto">
