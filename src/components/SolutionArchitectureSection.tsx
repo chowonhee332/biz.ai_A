@@ -41,7 +41,7 @@ const LayerGraphic = ({ activeStep }: { activeStep: number }) => {
 
     return (
         // Used natural aspect ratio, scaled the SVG for larger size and adjusted padding to firmly root it vertically in center
-        <div className="relative w-full max-w-[800px] lg:scale-[1.25] flex items-center justify-center transform lg:translate-x-12 pointer-events-none">
+        <div className="relative w-full max-w-[400px] md:max-w-[600px] lg:max-w-[800px] lg:scale-[1.25] flex items-center justify-center transform lg:translate-x-12 pointer-events-none mt-8 md:mt-0">
             <svg
                 viewBox="-240 -260 480 480"
                 fill="none"
@@ -159,29 +159,29 @@ export default function SolutionArchitectureSection() {
 
     return (
         <section ref={containerRef} className="relative bg-[#000000] h-[400vh]">
-            <div className="sticky top-0 h-screen overflow-hidden flex items-center">
-                <div className="max-w-[1200px] mx-auto w-full px-6 flex flex-col lg:flex-row items-center justify-between gap-12">
+            <div className="sticky top-0 h-screen overflow-hidden flex flex-col justify-center items-center">
+                <div className="max-w-[1200px] mx-auto w-full px-4 md:px-6 flex flex-col lg:flex-row items-center justify-between gap-8 md:gap-12 pt-20 lg:pt-0">
 
                     {/* Left Text Content */}
-                    <div className="w-full lg:w-5/12 flex flex-col justify-center relative z-10">
+                    <div className="w-full lg:w-5/12 flex flex-col justify-center relative z-10 order-2 lg:order-1 h-[300px] md:h-auto">
 
                         {/* Scrolling / Masked Viewport */}
                         <div
-                            className="relative h-[650px] overflow-hidden"
+                            className="relative h-[250px] md:h-[400px] lg:h-[650px] overflow-hidden"
                             style={{
                                 WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 15%, black 65%, transparent 100%)',
                                 maskImage: 'linear-gradient(to bottom, transparent 0%, black 15%, black 65%, transparent 100%)'
                             }}
                         >
                             <motion.div
-                                className="flex flex-col absolute w-full top-[100px]"
-                                animate={{ y: -(activeStep * 240) }}
+                                className="flex flex-col absolute w-full top-[20px] md:top-[60px] lg:top-[100px]"
+                                animate={{ y: -(activeStep * (window.innerWidth < 1024 ? 180 : 240)) }}
                                 transition={{ type: "spring", stiffness: 100, damping: 25 }}
                             >
                                 {/* Header section included in the scroll */}
-                                <div className={`mb-12 transition-all duration-500 pl-6 ${activeStep > 0 ? 'opacity-0' : 'opacity-100'}`}>
-                                    <span className="text-[#0885FE] font-bold text-[16px] tracking-widest block mb-4 uppercase">Architecture</span>
-                                    <h2 className="text-[48px] lg:text-[56px] font-black text-white tracking-tight leading-tight">
+                                <div className={`mb-8 md:mb-12 transition-all duration-500 pl-4 md:pl-6 ${activeStep > 0 ? 'opacity-0' : 'opacity-100'}`}>
+                                    <span className="text-[#0885FE] font-bold text-[14px] md:text-[16px] tracking-widest block mb-2 md:mb-4 uppercase">Architecture</span>
+                                    <h2 className="text-[36px] md:text-[48px] lg:text-[56px] font-black text-white tracking-tight leading-tight">
                                         Kt ds AI Solution
                                     </h2>
                                 </div>
@@ -191,13 +191,13 @@ export default function SolutionArchitectureSection() {
                                     return (
                                         <div
                                             key={index}
-                                            className={`h-[240px] flex-shrink-0 transition-all duration-500 ${isActive ? 'opacity-100 pl-6 border-l-4 border-[#0885FE]' : 'opacity-20 pl-6 border-l-4 border-[#333333]'}`}
+                                            className={`h-[180px] lg:h-[240px] flex-shrink-0 transition-all duration-500 ${isActive ? 'opacity-100 pl-4 md:pl-6 border-l-2 md:border-l-4 border-[#0885FE]' : 'opacity-20 pl-4 md:pl-6 border-l-2 md:border-l-4 border-[#333333]'}`}
                                         >
-                                            <div className={`text-[32px] font-bold mb-2 transition-colors duration-500 ${isActive ? 'text-[#0885FE]' : 'text-[#666666]'}`}>
+                                            <div className={`text-[24px] md:text-[32px] font-bold mb-1 md:mb-2 transition-colors duration-500 ${isActive ? 'text-[#0885FE]' : 'text-[#666666]'}`}>
                                                 {step.num}
                                             </div>
-                                            <h3 className={`text-[28px] font-bold mb-4 transition-colors duration-500 ${isActive ? 'text-white' : 'text-[#666666]'}`}>{step.title}</h3>
-                                            <div className="text-[20px] whitespace-pre-line leading-relaxed">
+                                            <h3 className={`text-[20px] md:text-[24px] lg:text-[28px] font-bold mb-2 md:mb-4 transition-colors duration-500 ${isActive ? 'text-white' : 'text-[#666666]'}`}>{step.title}</h3>
+                                            <div className="text-[14px] md:text-[16px] lg:text-[20px] whitespace-pre-line leading-relaxed">
                                                 {step.desc.split('\n').map((line, i) => (
                                                     <div key={i} className="flex items-center gap-3">
                                                         <span className="text-[#0885FE]">•</span>
@@ -212,11 +212,10 @@ export default function SolutionArchitectureSection() {
                         </div>
                     </div>
 
-                    {/* Right SVG Graphic */}
-                    <div className="w-full lg:w-7/12 flex justify-center lg:justify-end items-center px-4">
+                    {/* Right Graphic Content */}
+                    <div className="w-full lg:w-7/12 flex justify-center items-center relative order-1 lg:order-2">
                         <LayerGraphic activeStep={activeStep} />
                     </div>
-
                 </div>
             </div>
         </section>

@@ -126,9 +126,9 @@ const InteractiveMockup = ({ image }: { image: string }) => {
   );
 };
 
-const UseCaseVisual = ({ image, index, setActive }: { key?: React.Key; image: string; index: number; setActive: (idx: number) => void }) => {
+const UseCaseVisual = ({ image, index, setActive, isActive }: { image: string; index: number; setActive: (idx: number) => void; isActive: boolean }) => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { margin: "-15% 0px -15% 0px", amount: 0.1 });
+  const isInView = useInView(ref, { margin: "-20% 0px -20% 0px", amount: 0.5 });
 
   useEffect(() => {
     if (isInView) setActive(index);
@@ -138,7 +138,7 @@ const UseCaseVisual = ({ image, index, setActive }: { key?: React.Key; image: st
     <motion.div
       ref={ref}
       initial={{ opacity: 0, y: 40 }}
-      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
+      animate={(isInView || isActive) ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
       transition={{
         type: "spring",
         stiffness: 100,
@@ -244,10 +244,10 @@ const DomainAccordionItem = ({
     <motion.div
       layout
       onMouseEnter={onMouseEnter}
-      className="relative h-[700px] overflow-hidden cursor-pointer rounded-2xl smooth-gpu"
+      className="relative h-[400px] md:h-[550px] lg:h-[700px] overflow-hidden cursor-pointer rounded-2xl smooth-gpu w-full lg:w-auto"
       style={{ willChange: 'flex, width' }}
       animate={{
-        flex: isActive ? 680 : 122,
+        flex: isActive ? (window.innerWidth < 1024 ? 300 : 680) : (window.innerWidth < 1024 ? 80 : 122),
       }}
       transition={{
         type: "spring",
@@ -275,13 +275,13 @@ const DomainAccordionItem = ({
         <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60" />
       </div>
 
-      <div className={`absolute inset-x-0 top-0 p-8 flex flex-col justify-start h-full ${isActive ? 'text-left' : 'text-center'}`}>
-        <div className={`flex flex-col gap-4 ${isActive ? 'items-start' : 'items-center'}`}>
+      <div className={`absolute inset-x-0 top-0 p-6 md:p-8 flex flex-col justify-start h-full ${isActive ? 'text-left' : 'text-center'}`}>
+        <div className={`flex flex-col gap-2 md:gap-4 ${isActive ? 'items-start' : 'items-center'}`}>
           <motion.div
             layout
             initial={false}
           >
-            <h4 className={`text-white font-normal transition-colors duration-500 whitespace-nowrap ${isActive ? 'text-[18px] mb-4' : 'text-[18px]'}`}>
+            <h4 className={`text-white font-normal transition-colors duration-500 whitespace-nowrap ${isActive ? 'text-[16px] md:text-[18px] mb-2 md:mb-4' : 'text-[16px] md:text-[18px]'}`}>
               {title}
             </h4>
           </motion.div>
@@ -291,11 +291,11 @@ const DomainAccordionItem = ({
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
-              className="flex flex-col gap-2"
+              className="flex flex-col gap-1 md:gap-2"
             >
               {agents.map((agent, i) => (
                 <div key={i} className="flex items-center">
-                  <span className="text-gray-100 text-[28px] font-bold">{agent}</span>
+                  <span className="text-gray-100 text-[18px] md:text-[24px] lg:text-[28px] font-bold">{agent}</span>
                 </div>
               ))}
             </motion.div>
@@ -333,23 +333,23 @@ const ProcessSection = () => {
       >
         <section id="process" className="py-32 px-6 relative overflow-hidden">
           <div className="max-w-[1240px] mx-auto relative z-10">
-            <div className="text-center mb-24">
-              <span className="text-[#0885FE] text-[20px] font-bold mb-4 block tracking-wider">Why kt ds</span>
-              <h2 className="text-[52px] font-black text-black mb-6 tracking-tight leading-tight">
+            <div className="text-center mb-16 md:mb-24 px-4 md:px-0">
+              <span className="text-[#0885FE] text-[16px] md:text-[20px] font-bold mb-4 block tracking-wider">Why kt ds</span>
+              <h2 className="text-[36px] md:text-[44px] lg:text-[52px] font-black text-black mb-4 md:mb-6 tracking-tight leading-tight">
                 왜 KT DS와 함께 해야 할까요?
               </h2>
-              <p className="text-black/80 text-[18px] max-w-2xl mx-auto font-medium">
+              <p className="text-black/80 text-[16px] md:text-[18px] max-w-2xl mx-auto font-medium">
                 기업의 복잡한 요구사항을 기획부터 구축, 검증, 운영까지<br className="hidden md:block" />
                 표준화된 프로세스로 완성합니다.
               </p>
             </div>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-3">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-3 px-4 md:px-0">
               {[
-                { num: "01", title: "분석/설계", subtitle: "Retriever,\nAnalyst", desc: "데이터 협의체를 통해 데이터 분석 및 선별 이를 기반으로 RAG 및 Agent 구현에 최적화된 체계 구축\n원인 분석, 옵션 비교, 리스크/영향 평가, 계획 수립", color: "text-[#0885FE]" },
-                { num: "02", title: "개발/구현", subtitle: "Writer,\nExecutor", desc: "Enterprise 맞춤형 워크플로우 생성 및 RAG 엔진 기반 지식 증강 최적화\n원인 분석, 옵션 비교, 리스크/영향 평가, 계획 수립", color: "text-[#0885FE]" },
-                { num: "03", title: "검증/테스트", subtitle: "Validator,\nQuality", desc: "답변 정확도 및 안정성 검증을 위한 자동화 테스트와 멀티 레벨 QA 수행\n원인 분석, 옵션 비교, 리스크/영향 평가, 계획 수립", color: "text-[#0885FE]" },
-                { num: "04", title: "운영/안정화", subtitle: "Maintainer,\nSRE", desc: "실시간 모니터링 및 성능 최적화를 통해 멈춤 없는 엔터프라이즈 AI 환경 제공\n원인 분석, 옵션 비교, 리스크/영향 평가, 계획 수립", color: "text-[#0885FE]" }
+                { num: "01", title: "분석/설계", subtitle: "Retriever,\nAnalyst", desc: "데이터 협의체를 통해 데이터 분석 및 선별 이를 기반으로 RAG 및 Agent 구현에 최적화된 체계 구축", color: "text-[#0885FE]" },
+                { num: "02", title: "개발/구현", subtitle: "Writer,\nExecutor", desc: "Enterprise 맞춤형 워크플로우 생성 및 RAG 엔진 기반 지식 증강 최적화", color: "text-[#0885FE]" },
+                { num: "03", title: "검증/테스트", subtitle: "Validator,\nQuality", desc: "답변 정확도 및 안정성 검증을 위한 자동화 테스트와 멀티 레벨 QA 수행", color: "text-[#0885FE]" },
+                { num: "04", title: "운영/안정화", subtitle: "Maintainer,\nSRE", desc: "실시간 모니터링 및 성능 최적화를 통해 멈춤 없는 엔터프라이즈 AI 환경 제공", color: "text-[#0885FE]" }
               ].map((step, i) => (
                 <motion.div
                   key={i}
@@ -357,16 +357,16 @@ const ProcessSection = () => {
                   whileInView={{ y: 0, opacity: 1 }}
                   transition={{ delay: i * 0.15, duration: 0.6, ease: "easeOut" }}
                   viewport={{ once: false, margin: "-50px" }}
-                  className="bg-white rounded-[20px] p-10 hover:shadow-lg transition-shadow duration-500 group flex flex-col min-h-[420px]"
+                  className="bg-white rounded-[20px] p-8 md:p-10 hover:shadow-lg transition-shadow duration-500 group flex flex-col md:min-h-[420px]"
                 >
-                  <div className="min-h-[130px]">
-                    <span className={`${step.color} text-lg font-black mb-4 block`}>{step.num}</span>
-                    <h3 className="text-[32px] font-black text-gray-900 leading-tight whitespace-pre-line">{step.subtitle}</h3>
+                  <div className="md:min-h-[130px] mb-4 md:mb-0">
+                    <span className={`${step.color} text-base md:text-lg font-black mb-2 md:mb-4 block`}>{step.num}</span>
+                    <h3 className="text-[28px] md:text-[32px] font-black text-gray-900 leading-tight whitespace-pre-line">{step.subtitle}</h3>
                   </div>
-                  <div className="flex-1" />
-                  <div className="min-h-[160px]">
-                    <h4 className="text-[18px] font-medium text-gray-900 mb-3">{step.title}</h4>
-                    <p className="text-gray-400 text-[14px] leading-[1.8] whitespace-pre-line">
+                  <div className="hidden md:block flex-1" />
+                  <div className="md:min-h-[160px]">
+                    <h4 className="text-[16px] md:text-[18px] font-medium text-gray-900 mb-2 md:mb-3">{step.title}</h4>
+                    <p className="text-gray-400 text-[13px] md:text-[14px] leading-[1.8] whitespace-pre-line">
                       {step.desc}
                     </p>
                   </div>
@@ -516,11 +516,11 @@ const App = () => {
     }, 1000);
   };
 
-  const handleSetActiveUseCase = (idx: number) => {
+  const handleSetActiveUseCase = React.useCallback((idx: number) => {
     if (!isScrollingRef.current) {
       setActiveUseCase(idx);
     }
-  };
+  }, []);
 
   const useCaseItems = [
     {
@@ -569,10 +569,10 @@ const App = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-white font-sans">
+    <div className="min-h-screen bg-black text-white font-sans">
       {/* GNB - Global Navigation Bar */}
       <nav
-        className="fixed w-full z-50 bg-[#0a0a0a]/80 backdrop-blur-xl py-4 px-6 md:px-10 border-b border-white/5"
+        className="fixed w-full z-50 bg-black/80 backdrop-blur-xl py-4 px-6 md:px-10 border-b border-white/5"
       >
         <div className="max-w-[1200px] mx-auto flex justify-between items-center">
           {/* Logo */}
@@ -608,7 +608,7 @@ const App = () => {
               initial={{ height: 0, opacity: 0 }}
               animate={{ height: "auto", opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
-              className="lg:hidden absolute top-full left-0 right-0 bg-[#0a0a0a]/80 backdrop-blur-xl py-4 px-6 overflow-hidden border-b border-white/10"
+              className="lg:hidden absolute top-full left-0 right-0 bg-black/80 backdrop-blur-xl py-4 px-6 overflow-hidden border-b border-white/10"
             >
               <div className="flex flex-col gap-4">
                 <Link to="/platform" className="text-white/90 hover:text-white font-medium py-1" onClick={() => setIsMenuOpen(false)}>멀티 에이전트 플랫폼</Link>
@@ -629,7 +629,7 @@ const App = () => {
       </nav>
 
       {/* Hero Section */}
-      <section id="hero" className="relative z-20 h-screen flex items-center justify-center overflow-clip bg-[#0a0a0a] font-poppins">
+      <section id="hero" className="relative z-20 h-screen flex items-center justify-center overflow-clip bg-black font-poppins">
         <div className="absolute inset-0 z-0 pointer-events-none">
           <ParticleEngine scrollYProgress={scrollYProgress} />
         </div>
@@ -658,7 +658,7 @@ const App = () => {
       </section>
 
       {/* Main Content Area */}
-      <div className="relative z-20 bg-[#0a0a0a]">
+      <div className="relative z-20 bg-black">
         <div className="relative w-full pt-10">
           {/* Continuous gradient from the Hero section into the gap */}
           <div className="absolute inset-x-0 top-0 h-[500px] bg-[radial-gradient(ellipse_at_top,rgba(37,99,235,0.15)_0%,transparent_70%)] pointer-events-none z-0" />
@@ -666,14 +666,14 @@ const App = () => {
             style={{ clipPath, willChange: 'clip-path' }}
             className="bg-[#F3F5FC] border border-black/5 relative z-20 overflow-hidden mb-20 smooth-gpu"
           >
-            <section id="solution" className="py-32 px-6">
+            <section id="solution" className="py-20 md:py-32 px-4 md:px-6">
               <div className="max-w-[1200px] mx-auto relative">
-                <div className="text-center mb-20 font-pretendard flex flex-col items-center relative z-10">
-                  <span className="text-[#0885FE] font-bold text-[14px] tracking-widest block mb-5 uppercase">Architecture</span>
-                  <h2 className="text-[58px] font-black text-black mb-6 tracking-tight leading-tight">
+                <div className="text-center mb-16 md:mb-20 font-pretendard flex flex-col items-center relative z-10">
+                  <span className="text-[#0885FE] font-bold text-[12px] md:text-[14px] tracking-widest block mb-4 md:mb-5 uppercase">Architecture</span>
+                  <h2 className="text-[36px] md:text-[48px] lg:text-[58px] font-black text-black mb-4 md:mb-6 tracking-tight leading-tight">
                     Kt ds AI Solutions
                   </h2>
-                  <p className="text-black/80 text-[18px] max-w-2xl mx-auto font-medium">
+                  <p className="text-black/80 text-[16px] md:text-[18px] max-w-2xl mx-auto font-medium px-4 md:px-0">
                     AI 전략부터 운영까지, 기업 AI의 전 과정을 통합 지원합니다.
                   </p>
                 </div>
@@ -768,15 +768,15 @@ const App = () => {
           <SolutionArchitectureSection />
         </div>
 
-        <section id="domain" className="py-32 px-6 relative overflow-hidden bg-[#0a0a0a] pb-16">
+        <section id="domain" className="py-20 md:py-32 px-4 md:px-6 relative overflow-hidden bg-black pb-16">
           <div className="max-w-[1200px] mx-auto">
-            <div className="text-left mb-16 font-pretendard">
-              <span className="text-[#0885FE] font-bold text-[20px] mb-4 block tracking-tight">Multi Agent</span>
-              <h2 className="text-[52px] font-black bg-gradient-to-r from-white via-white via-[40%] to-[#93C5FD] bg-clip-text text-transparent mb-6 tracking-tight">도메인별 Multi Agent</h2>
-              <p className="text-white/80 text-[18px] font-normal tracking-tight">공공/금융 등 도메인별로 KTDS의 Multi-Agent를 활용해 보세요.</p>
+            <div className="text-left mb-12 md:mb-16 font-pretendard">
+              <span className="text-[#0885FE] font-bold text-[16px] md:text-[20px] mb-2 md:mb-4 block tracking-tight">Multi Agent</span>
+              <h2 className="text-[36px] md:text-[44px] lg:text-[52px] font-black bg-gradient-to-r from-white via-white via-[40%] to-[#93C5FD] bg-clip-text text-transparent mb-4 md:mb-6 tracking-tight">도메인별 Multi Agent</h2>
+              <p className="text-white/80 text-[16px] md:text-[18px] font-normal tracking-tight">공공/금융 등 도메인별로 KTDS의 Multi-Agent를 활용해 보세요.</p>
             </div>
 
-            <div className="flex gap-2 w-full">
+            <div className="flex flex-col lg:flex-row gap-2 md:gap-4 w-full h-[600px] md:h-auto lg:h-[700px]">
               <DomainAccordionItem
                 title="금융"
                 agents={['Audit Agent', 'SQL Agent', 'RFP Agent']}
@@ -817,26 +817,36 @@ const App = () => {
         </section>
 
         <section id="use-cases" className="py-32 bg-[#000000] relative">
-          <div className="max-w-[1200px] mx-auto w-full min-h-[150vh] relative flex flex-col items-start px-6">
-            <div className="w-full mb-6 pt-[80px]">
-              <span className="text-[#0885FE] font-bold text-[14px] tracking-widest block mb-5 uppercase">Use Case</span>
-              <h2 className="text-[58px] font-black bg-gradient-to-r from-white via-white via-[40%] to-[#93C5FD] bg-clip-text text-transparent tracking-tight leading-[1.1] font-pretendard">
+          <div className="max-w-[1200px] mx-auto w-full min-h-[100vh] lg:min-h-[150vh] relative flex flex-col items-start px-4 md:px-6">
+            <div className="w-full mb-6 pt-[40px] md:pt-[80px]">
+              <span className="text-[#0885FE] font-bold text-[14px] tracking-widest block mb-4 md:mb-5 uppercase">Use Case</span>
+              <h2 className="text-[36px] md:text-[44px] lg:text-[58px] font-black bg-gradient-to-r from-white via-white via-[40%] to-[#93C5FD] bg-clip-text text-transparent tracking-tight leading-[1.1] font-pretendard">
                 Solution, <br />
                 Multi Agent <br />
                 Use Cases
               </h2>
             </div>
 
-            <div className="w-full flex flex-col lg:flex-row items-start relative gap-0">
-              <div className="w-full lg:w-[42%] lg:sticky lg:top-0 lg:h-screen flex flex-col justify-start z-20 pr-12 lg:pr-16 pt-[100px]">
+            <div className="w-full flex flex-col lg:flex-row items-start relative gap-8 lg:gap-0">
+              <div className="w-full lg:w-[42%] lg:sticky lg:top-0 lg:h-screen flex flex-col justify-start z-20 pr-0 md:pr-12 lg:pr-16 pt-[40px] md:pt-[100px]">
                 <div className="flex flex-col">
                   {useCaseItems.map((item, index) => {
                     const isActive = index === activeUseCase;
                     return (
-                      <div key={item.id} className="group py-[23px] border-b border-white/10">
+                      <div key={item.id} className="group py-[16px] md:py-[23px] border-b border-white/10">
                         <h3
-                          className={`text-[32px] tracking-tight transition-all duration-500 cursor-pointer flex items-center gap-4 ${isActive ? 'text-white' : 'text-white/30 hover:text-white/50'}`}
-                          onClick={() => setActiveUseCase(index)}
+                          className={`text-[24px] md:text-[32px] tracking-tight transition-all duration-500 cursor-pointer flex flex-col md:flex-row items-start md:items-center gap-2 md:gap-4 ${isActive ? 'text-white' : 'text-white/30 hover:text-white/50'}`}
+                          onClick={() => {
+                            const element = document.getElementById(`usecase-${item.id}`);
+                            if (element) {
+                              isScrollingRef.current = true;
+                              element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                              setActiveUseCase(index);
+                              setTimeout(() => {
+                                isScrollingRef.current = false;
+                              }, 1000);
+                            }
+                          }}
                         >
                           <span className="font-bold">{item.titlePrefix}</span>
                           {item.titleSuffix && <span className="font-light">{item.titleSuffix}</span>}
@@ -856,21 +866,39 @@ const App = () => {
                                   initial={{ y: 10, opacity: 0 }}
                                   animate={{ y: 0, opacity: 1 }}
                                   transition={{ duration: 0.3 }}
-                                  className="text-[16px] text-white/80 leading-relaxed max-w-lg mb-6 whitespace-pre-line font-normal"
+                                  className="text-[16px] text-white/80 leading-relaxed max-w-lg mb-8 whitespace-pre-line font-normal"
                                 >
                                   {item.desc}
                                 </motion.p>
+
+                                {item.features && (
+                                  <motion.div
+                                    initial={{ y: 15, opacity: 0 }}
+                                    animate={{ y: 0, opacity: 1 }}
+                                    transition={{ delay: 0.1, duration: 0.4 }}
+                                    className="bg-white/[0.04] border border-white/5 rounded-2xl p-6 mb-8 max-w-lg"
+                                  >
+                                    <ul className="space-y-3">
+                                      {item.features.map((feature: string, i: number) => (
+                                        <li key={i} className="flex items-start gap-3 text-white/70 text-[15px] leading-relaxed">
+                                          <span className="text-white/40 mt-[2px]">•</span>
+                                          <span>{feature}</span>
+                                        </li>
+                                      ))}
+                                    </ul>
+                                  </motion.div>
+                                )}
 
                                 {item.tags && (
                                   <motion.div
                                     initial={{ y: 20, opacity: 0 }}
                                     animate={{ y: 0, opacity: 1 }}
                                     transition={{ delay: 0.2 }}
-                                    className="flex flex-wrap gap-4 mb-8"
+                                    className="flex flex-wrap gap-2.5"
                                   >
                                     {item.tags.map((tag: string, i: number) => {
                                       return (
-                                        <span key={i} className="text-[16px] font-medium text-[#00AEFF] transition-none">
+                                        <span key={i} className="px-4 py-1.5 rounded-full bg-[#0885FE]/10 border border-[#0885FE]/20 text-[14px] font-medium text-[#00AEFF] transition-none backdrop-blur-sm">
                                           # {tag}
                                         </span>
                                       );
@@ -880,16 +908,6 @@ const App = () => {
 
 
 
-                                <Link to="/use-cases">
-                                  <motion.button
-                                    initial={{ opacity: 0 }}
-                                    animate={{ opacity: 1 }}
-                                    transition={{ delay: 0.6 }}
-                                    className="mt-6 w-[80px] h-[36px] rounded-lg border border-white/40 text-white text-[15px] font-medium transition-all group flex items-center justify-center gap-0 hover:border-white/60 p-0"
-                                  >
-                                    <span>더보기</span><ChevronRight size={16} className="max-w-0 opacity-0 group-hover:max-w-[18px] group-hover:opacity-100 group-hover:ml-[2px] transition-all duration-300 overflow-hidden" />
-                                  </motion.button>
-                                </Link>
                               </div>
                             </motion.div>
                           )}
@@ -900,24 +918,27 @@ const App = () => {
                 </div>
               </div>
 
-              <div className="w-full lg:w-[58%] flex flex-col gap-[30vh] pb-[30vh] pt-[140px] items-center lg:items-end overflow-visible">
+              <div className="w-full lg:w-[58%] flex flex-col gap-12 lg:gap-[30vh] pb-[10vh] lg:pb-[30vh] pt-[40px] lg:pt-[140px] items-center lg:items-end overflow-visible">
                 {useCaseItems.map((item, index) => (
-                  <UseCaseVisual key={index} image={item.image} index={index} setActive={handleSetActiveUseCase} />
+                  <div key={index} id={`usecase-${item.id}`} className="w-full scroll-mt-[20vh]">
+                    <UseCaseVisual
+                      image={item.image}
+                      index={index}
+                      setActive={handleSetActiveUseCase}
+                      isActive={activeUseCase === index}
+                    />
+                  </div>
                 ))}
               </div>
             </div>
 
-            <div className="w-full flex justify-center -mt-16 relative z-30">
-              <Link to="/use-cases">
-                <Button
-                  className="w-[220px] h-[48px] text-[16px] font-medium border border-white/40 bg-transparent text-white rounded-lg transition-all group flex items-center justify-center p-0 hover:border-white/60 hover:bg-transparent"
-                >
-                  <span>AI Agent / Solution 더보기</span><ChevronRight size={16} className="max-w-0 opacity-0 group-hover:max-w-[18px] group-hover:opacity-100 group-hover:ml-[2px] transition-all duration-300 overflow-hidden" />
-                </Button>
-              </Link>
-            </div>
           </div>
-        </section>\n\n        <ProcessSection />\n\n\n        <section id="logos" className="relative py-12 bg-[#000000] overflow-hidden">
+        </section>
+
+        <ProcessSection />
+
+
+        <section id="logos" className="relative py-12 bg-black overflow-hidden">
           <div className="relative z-10 max-w-[1200px] mx-auto px-6 text-center">
             <div className="relative overflow-hidden w-full py-4">
               <motion.div
@@ -956,32 +977,34 @@ const App = () => {
           </div>
         </section>
 
-        <section id="stats" className="py-32 px-6 bg-[#000000]">
+        <section id="stats" className="py-20 md:py-32 px-4 md:px-6 bg-[#000000]">
           <div className="max-w-[1200px] mx-auto">
-            <div className="text-center mb-32">
-              <span className="text-[#0885FE] font-bold text-[14px] tracking-widest block mb-5 uppercase">Trust</span>
-              <h2 className="text-[58px] font-black bg-gradient-to-r from-white via-white via-[40%] to-[#93C5FD] bg-clip-text text-transparent mb-6 tracking-tight">
+            <div className="text-center mb-20 md:mb-32">
+              <span className="text-[#0885FE] font-bold text-[12px] md:text-[14px] tracking-widest block mb-4 md:mb-5 uppercase">Trust</span>
+              <h2 className="text-[36px] md:text-[48px] lg:text-[58px] font-black bg-gradient-to-r from-white via-white via-[40%] to-[#93C5FD] bg-clip-text text-transparent mb-4 md:mb-6 tracking-tight leading-tight">
                 수치로 증명하는 Biz.AI
               </h2>
-              <p className="text-white/80 text-[18px] max-w-3xl mx-auto font-normal">
+              <p className="text-white/80 text-[16px] md:text-[18px] max-w-3xl mx-auto font-normal px-4 md:px-0">
                 150+ 고객과 600+ AI Agent 구축 경험으로 Biz.AI의 역량을 증명합니다.
               </p>
             </div>
 
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-12 md:gap-x-16">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12 lg:gap-x-16 px-4 md:px-0">
               {[
                 { label: "IT Engineers", value: 1700, suffix: "+", sub: "Cloud & AI 기술을 선도하는 전문 인력" },
                 { label: "Solution", value: 18, suffix: "", sub: "AX를 리딩하는 자체 개발 솔루션" },
                 { label: "Clients", value: 150, suffix: "+", sub: "금융·공공·유통·미디어 등 다양한 산업 고객" },
                 { label: "AI Agent", value: 600, suffix: "+", sub: "도메인별 특화 AI 에이전트" }
               ].map((stat, i) => (
-                <div key={i} className="flex flex-col items-start font-pretendard">
-                  <div className="text-[80px] font-medium text-white tracking-tighter leading-none mb-12">
-                    <AnimatedCounter from={0} to={stat.value} />
-                    <span className="text-[#0885FE] ml-1">{stat.suffix}</span>
+                <div key={i} className="flex flex-col items-center md:items-start text-center md:text-left group cursor-default">
+                  <div className="flex items-baseline mb-2 md:mb-4 gap-1 transform transition-transform duration-300 group-hover:scale-105 group-hover:-translate-y-1">
+                    <span className="text-[40px] md:text-[60px] lg:text-[80px] font-black text-white tracking-tighter leading-none"><AnimatedCounter from={0} to={stat.value} /></span>
+                    <span className="text-[#0885FE] text-[24px] md:text-[32px] lg:text-[40px] font-bold leading-none">{stat.suffix}</span>
                   </div>
-                  <span className="text-white text-[18px] font-bold mb-1">{stat.label}</span>
-                  <p className="text-white/80 text-[16px] leading-relaxed font-normal break-keep">{stat.sub}</p>
+                  <div>
+                    <h4 className="text-[16px] md:text-[18px] lg:text-[20px] font-bold text-white mb-1 md:mb-2">{stat.label}</h4>
+                    <p className="text-white/50 text-[12px] md:text-[14px] lg:text-[15px] leading-relaxed max-w-[200px] mx-auto md:mx-0 break-keep">{stat.sub}</p>
+                  </div>
                 </div>
               ))}
             </div>
@@ -1334,7 +1357,7 @@ const App = () => {
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
             onClick={scrollToTop}
-            className="fixed bottom-8 right-8 z-[100] w-[40px] h-[40px] flex items-center justify-center bg-[#0a0a0a]/60 text-white hover:bg-[#0a0a0a]/80 rounded-full transition-all border border-white/20"
+            className="fixed bottom-8 right-8 z-[100] w-[40px] h-[40px] flex items-center justify-center bg-black/60 text-white hover:bg-black/80 rounded-full transition-all border border-white/20"
             aria-label="맨 위로 가기"
           >
             <ArrowUp size={16} strokeWidth={2.5} />

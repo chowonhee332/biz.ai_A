@@ -22,9 +22,9 @@ export default function MultiAgentPlatformPage() {
     ];
 
     return (
-        <div className="min-h-screen bg-[#0a0a0a] text-white font-pretendard flex flex-col">
+        <div className="min-h-screen bg-black text-white font-pretendard flex flex-col">
             {/* GNB */}
-            <nav className="fixed w-full z-50 bg-[#0a0a0a]/80 backdrop-blur-xl py-4 px-6 md:px-10 border-b border-white/5">
+            <nav className="fixed w-full z-50 bg-black/80 backdrop-blur-xl py-4 px-6 md:px-10 border-b border-white/5">
                 <div className="max-w-[1200px] mx-auto flex justify-between items-center px-6 md:px-0">
                     <Link to="/" className="flex items-center gap-2 shrink-0">
                         <img src="/bizai_logo.png" alt="Biz.AI Logo" className="h-6 w-auto" />
@@ -56,7 +56,7 @@ export default function MultiAgentPlatformPage() {
                             initial={{ height: 0, opacity: 0 }}
                             animate={{ height: "auto", opacity: 1 }}
                             exit={{ height: 0, opacity: 0 }}
-                            className="lg:hidden absolute top-full left-0 right-0 bg-[#0a0a0a]/95 backdrop-blur-xl py-4 px-6 overflow-hidden border-b border-white/10"
+                            className="lg:hidden absolute top-full left-0 right-0 bg-black/95 backdrop-blur-xl py-4 px-6 overflow-hidden border-b border-white/10"
                         >
                             <div className="flex flex-col gap-4">
                                 <Link to="/platform" className="text-white font-bold py-1" onClick={() => setIsMenuOpen(false)}>멀티 에이전트 플랫폼</Link>
@@ -77,36 +77,36 @@ export default function MultiAgentPlatformPage() {
             </nav>
 
             {/* Content Body */}
-            <section className="pt-48 pb-32 flex-1">
+            <section className="pt-24 md:pt-48 pb-16 md:pb-32 flex-1">
                 {/* Header Section */}
-                <div className="max-w-[1200px] mx-auto mb-20 px-6 lg:px-0">
+                <div className="max-w-[1200px] mx-auto mb-12 md:mb-20 px-6 xl:px-0">
                     <motion.div
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, ease: "easeOut" }}
                     >
-                        <h1 className="text-[58px] font-bold bg-gradient-to-r from-white via-white via-[40%] to-[#93C5FD] bg-clip-text text-transparent mb-6 tracking-tight leading-tight">
+                        <h1 className="text-[36px] md:text-[58px] font-bold bg-gradient-to-r from-white via-white via-[40%] to-[#93C5FD] bg-clip-text text-transparent mb-4 md:mb-6 tracking-tight leading-tight">
                             Multi-Agent Platform
                         </h1>
-                        <p className="text-white/70 text-[18px] max-w-2xl font-medium leading-relaxed">
+                        <p className="text-white/70 text-[15px] md:text-[18px] max-w-2xl font-medium leading-relaxed">
                             Biz.AI의 멀티 에이전트 플랫폼은 각 산업 분야에 최적화된 전문 AI 에이전트들을 통해 비즈니스 혁신을 지원합니다.
                         </p>
                     </motion.div>
                 </div>
 
                 {/* Grid Layout: Sidebar + Main Content */}
-                <div className="max-w-[1200px] mx-auto px-6 lg:px-0">
-                    <div className="flex flex-col lg:flex-row gap-20">
+                <div className="max-w-[1200px] mx-auto px-6 xl:px-0">
+                    <div className="flex flex-col lg:flex-row gap-8 lg:gap-20">
                         {/* Sidebar (LNB) */}
-                        <aside className="lg:w-[220px] shrink-0">
-                            <ul className="flex flex-col gap-8 sticky top-[100px] border-l border-white/5 py-2">
+                        <aside className="w-full lg:w-[220px] shrink-0 overflow-x-auto lg:overflow-visible no-scrollbar -mx-6 px-6 lg:mx-0 lg:px-0 sticky top-[72px] lg:top-[100px] z-30 bg-black/90 lg:bg-transparent py-4 lg:py-0 backdrop-blur-md lg:backdrop-blur-none border-b border-white/5 lg:border-b-0">
+                            <ul className="flex flex-row lg:flex-col gap-4 lg:gap-8 lg:border-l lg:border-white/5 lg:py-2 min-w-max lg:min-w-0">
                                 {sidebarItems.map((item) => (
                                     <li key={item}>
                                         <button
                                             onClick={() => setActiveTab(item)}
-                                            className={`pl-8 relative text-[18px] font-bold transition-all text-left w-full ${activeTab === item ? "text-white" : "text-white/30 hover:text-white/60"}`}
+                                            className={`relative text-[15px] lg:text-[18px] font-bold transition-all text-left whitespace-nowrap lg:whitespace-normal px-3 lg:px-0 lg:pl-8 py-2 lg:py-0 rounded-full lg:rounded-none lg:w-full ${activeTab === item ? "text-white bg-white/10 lg:bg-transparent" : "text-white/40 hover:text-white/80 bg-white/5 lg:bg-transparent lg:hover:bg-transparent"}`}
                                         >
-                                            {activeTab === item && <div className="absolute left-[-1.5px] top-0 bottom-0 w-[3px] bg-[#3B82F6] rounded-full" />}
+                                            {activeTab === item && <div className="hidden lg:block absolute left-[-1.5px] top-0 bottom-0 w-[3px] bg-[#3B82F6] rounded-full" />}
                                             {item}
                                         </button>
                                     </li>
@@ -118,9 +118,9 @@ export default function MultiAgentPlatformPage() {
                         <main className="flex-1 min-w-0">
                             <div className="flex-1 min-w-0">
                                 {/* Title & Top Description */}
-                                <div className="mb-12">
-                                    <h2 className="text-[36px] font-bold text-white mb-6">폐쇄망 설치형 AI 코드 개발 어플라이언스 'CODEBOX'</h2>
-                                    <div className="space-y-4 text-white/60 text-[16px] leading-relaxed break-keep">
+                                <div className="mb-10 md:mb-12 pt-4 lg:pt-0">
+                                    <h2 className="text-[28px] md:text-[36px] font-bold text-white mb-4 md:mb-6 leading-tight break-keep">폐쇄망 설치형 AI 코드 개발 어플라이언스 'CODEBOX'</h2>
+                                    <div className="space-y-3 md:space-y-4 text-white/60 text-[15px] md:text-[16px] leading-relaxed break-keep">
                                         <p>내부망에서 작동하는 코드 생성형 AI봇, LLM 기반 멀티 에이전트 인터페이스 솔루션입니다.</p>
                                         <p>본 서비스는 폐쇄망 환경에서도 실시간 코드 개발을 지원하며 믿을 수 있는 설치형 보안 솔루션입니다.</p>
                                         <p>저렴한 GPU 기반 서버 + 저비용 어플라이언스 + 전용 LLM을 탑재하여 낮은 비용으로 최고의 생산성을 경험하게 해드립니다.</p>
@@ -330,7 +330,7 @@ export default function MultiAgentPlatformPage() {
             </section>
 
             {/* Footer */}
-            <footer className="bg-[#0a0a0a] border-t border-white/5 py-12 px-6">
+            <footer className="bg-black border-t border-white/5 py-12 px-6">
                 <div className="max-w-[1200px] mx-auto flex flex-col md:flex-row justify-between items-start gap-12">
                     <div className="flex flex-col gap-6">
                         <Link to="/" className="flex items-center gap-2">

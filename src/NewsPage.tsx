@@ -37,9 +37,9 @@ export default function NewsPage() {
     }, []);
 
     return (
-        <div className="min-h-screen bg-[#0a0a0a] text-white font-pretendard flex flex-col">
+        <div className="min-h-screen bg-black text-white font-pretendard flex flex-col">
             {/* 1. GNB 영역 (App.tsx와 동일하게 구성하지만 링크는 '/' 및 기타 영역 유지) */}
-            <nav className="fixed w-full z-50 bg-[#0a0a0a]/80 backdrop-blur-xl py-4 px-6 md:px-10 border-b border-white/5">
+            <nav className="fixed w-full z-50 bg-black/80 backdrop-blur-xl py-4 px-6 md:px-10 border-b border-white/5">
                 <div className="max-w-[1200px] mx-auto flex justify-between items-center px-6 md:px-0">
                     {/* Logo */}
                     <Link to="/" className="flex items-center gap-2 shrink-0">
@@ -73,7 +73,7 @@ export default function NewsPage() {
                             initial={{ height: 0, opacity: 0 }}
                             animate={{ height: "auto", opacity: 1 }}
                             exit={{ height: 0, opacity: 0 }}
-                            className="lg:hidden absolute top-full left-0 right-0 bg-[#0a0a0a]/95 backdrop-blur-xl py-4 px-6 overflow-hidden border-b border-white/10"
+                            className="lg:hidden absolute top-full left-0 right-0 bg-black/95 backdrop-blur-xl py-4 px-6 overflow-hidden border-b border-white/10"
                         >
                             <div className="flex flex-col gap-4">
                                 <Link to="/" className="text-white/90 hover:text-white font-medium py-1" onClick={() => setIsMenuOpen(false)}>멀티 에이전트 플랫폼</Link>
@@ -94,9 +94,9 @@ export default function NewsPage() {
             </nav>
 
             {/* 2. 본문 컨텐츠 시작 */}
-            <section className="pt-48 pb-32 flex-1">
+            <section className="pt-24 md:pt-48 pb-16 md:pb-32 flex-1">
                 {/* 헤더 영역: 상단 타이틀 + 설명 */}
-                <div className="max-w-[1200px] mx-auto mb-20">
+                <div className="max-w-[1200px] mx-auto mb-12 md:mb-20 px-4 md:px-0">
                     <div className="flex justify-between items-end">
                         <div className="flex flex-col items-start text-left">
                             <motion.div
@@ -104,10 +104,10 @@ export default function NewsPage() {
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.8, ease: "easeOut" }}
                             >
-                                <h1 className="text-[58px] font-bold bg-gradient-to-r from-white via-white via-[40%] to-[#93C5FD] bg-clip-text text-transparent mb-6 tracking-tight leading-tight">
+                                <h1 className="text-[36px] md:text-[58px] font-bold bg-gradient-to-r from-white via-white via-[40%] to-[#93C5FD] bg-clip-text text-transparent mb-4 md:mb-6 tracking-tight leading-tight">
                                     새로운 소식
                                 </h1>
-                                <p className="text-white/70 text-[18px] max-w-2xl font-medium leading-relaxed">
+                                <p className="text-white/70 text-[15px] md:text-[18px] max-w-2xl font-medium leading-relaxed">
                                     Biz.AI가 전하는 최신 업데이트와 인사이트를 확인하세요.
                                 </p>
                             </motion.div>
@@ -132,7 +132,7 @@ export default function NewsPage() {
                 </div>
 
                 {/* 하이라이트 캐러셀 (우측 블리드 레이아웃) */}
-                <div className="mb-24">
+                <div className="mb-16 md:mb-24">
                     <div
                         ref={newsScrollRef}
                         className="flex gap-6 overflow-x-auto no-scrollbar scroll-smooth pb-12 pl-[calc(max(24px,(100vw-1240px)/2+24px))] pr-6"
@@ -144,11 +144,11 @@ export default function NewsPage() {
                                 whileInView={{ y: 0, opacity: 1 }}
                                 transition={{ delay: i * 0.1, duration: 0.5 }}
                                 viewport={{ once: true }}
-                                className="group cursor-pointer shrink-0 w-[380px]"
+                                className="group cursor-pointer shrink-0 w-[280px] md:w-[380px]"
                                 onClick={() => navigate('/news/1', { state: { news } })}
                             >
                                 {/* 썸네일: 380 * 240 사이즈 */}
-                                <div className="relative w-full aspect-[380/240] rounded-2xl overflow-hidden mb-5 bg-zinc-900 border border-white/5 shadow-2xl">
+                                <div className="relative w-full aspect-[380/240] rounded-xl md:rounded-2xl overflow-hidden mb-4 md:mb-5 bg-zinc-900 border border-white/5 shadow-2xl">
                                     <motion.img
                                         src={news.image}
                                         alt={news.title}
@@ -158,25 +158,25 @@ export default function NewsPage() {
                                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-40" />
                                 </div>
                                 <div className="pt-2 px-1 flex-1 flex flex-col">
-                                    <span className="text-blue-400 text-[14px] font-bold mb-3">{news.tag}</span>
-                                    <h3 className="text-white text-[24px] font-bold leading-snug whitespace-pre-line group-hover:text-blue-400 transition-colors mb-4">{news.title}</h3>
-                                    <span className="text-white/40 text-[14px] font-medium mt-auto">{news.date}</span>
+                                    <span className="text-blue-400 text-[12px] md:text-[14px] font-bold mb-2 md:mb-3">{news.tag}</span>
+                                    <h3 className="text-white text-[18px] md:text-[24px] font-bold leading-snug whitespace-pre-line group-hover:text-blue-400 transition-colors mb-2 md:mb-4">{news.title}</h3>
+                                    <span className="text-white/40 text-[12px] md:text-[14px] font-medium mt-auto">{news.date}</span>
                                 </div>
                             </motion.div>
                         ))}
                     </div>
                 </div>
 
-                <div className="max-w-[1200px] mx-auto">
+                <div className="max-w-[1200px] mx-auto px-4 md:px-0">
                     {/* 좌측 메인 리스트 뷰 */}
                     <div className="flex-1">
                         {/* 카테고리 탭 - Sticky 적용 */}
-                        <div className="sticky top-[64px] bg-[#0a0a0a] z-40 flex items-center gap-8 mb-12 border-b border-white/5 py-4">
+                        <div className="sticky top-[72px] bg-black z-40 flex items-center gap-6 md:gap-8 mb-8 md:mb-12 border-b border-white/5 py-3 md:py-4 overflow-x-auto no-scrollbar whitespace-nowrap">
                             {["All", "News", "Tech Stories", "Documentation"].map((category) => (
                                 <button
                                     key={category}
                                     onClick={() => setActiveCategory(category)}
-                                    className={`text-[18px] font-bold transition-colors ${activeCategory === category
+                                    className={`text-[15px] md:text-[18px] font-bold transition-colors shrink-0 ${activeCategory === category
                                         ? "text-white"
                                         : "text-white/30 hover:text-white/60"
                                         }`}
@@ -200,13 +200,13 @@ export default function NewsPage() {
                                     whileInView={{ opacity: 1, x: 0 }}
                                     viewport={{ once: true }}
                                     transition={{ delay: i * 0.1, duration: 0.5 }}
-                                    className="group flex flex-col-reverse sm:flex-row gap-8 items-center py-8 rounded-3xl bg-transparent transition-all cursor-pointer"
+                                    className="group flex flex-col-reverse md:flex-row gap-6 md:gap-8 items-start md:items-center py-6 md:py-8 rounded-3xl bg-transparent transition-all cursor-pointer"
                                 >
-                                    <div className="flex-1 w-full flex flex-col">
-                                        <span className="text-blue-400 text-[14px] font-bold mb-3">{news.tag}</span>
-                                        <h3 className="text-white text-[24px] font-bold leading-snug mb-3 group-hover:text-blue-400 transition-colors">{news.title}</h3>
-                                        <p className="text-white/60 text-[16px] leading-relaxed line-clamp-2 mb-6">{news.desc}</p>
-                                        <span className="text-white/40 text-[14px] font-medium mt-auto">{news.date}</span>
+                                    <div className="flex-1 w-full flex flex-col pt-2 md:pt-0">
+                                        <span className="text-blue-400 text-[12px] md:text-[14px] font-bold mb-2 md:mb-3">{news.tag}</span>
+                                        <h3 className="text-white text-[20px] md:text-[24px] font-bold leading-snug mb-2 md:mb-3 group-hover:text-blue-400 transition-colors">{news.title}</h3>
+                                        <p className="text-white/60 text-[14px] md:text-[16px] leading-relaxed line-clamp-2 md:line-clamp-3 mb-4 md:mb-6">{news.desc}</p>
+                                        <span className="text-white/40 text-[12px] md:text-[14px] font-medium mt-auto">{news.date}</span>
                                     </div>
 
                                     <div className="w-full sm:w-[240px] shrink-0 aspect-video rounded-2xl overflow-hidden bg-zinc-900 border border-white/5">
@@ -224,7 +224,7 @@ export default function NewsPage() {
             </section>
 
             {/* 3. Footer */}
-            <footer className="bg-[#0a0a0a] py-32 px-6 border-t border-white/5">
+            <footer className="bg-black py-32 px-6 border-t border-white/5">
                 <div className="max-w-[1240px] mx-auto">
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-12 mb-24">
                         <div className="flex flex-col">

@@ -109,7 +109,7 @@ export default function HeroContent({ onSubmit, isAnalyzing = false, align = 'ce
               initial={{ opacity: 0 }}
               animate={{ opacity: done ? 1 : 0 }}
               transition={{ duration: 0.5 }}
-              className={`text-[18px] font-normal text-white/75 max-w-[85vw] sm:max-w-2xl md:max-w-3xl lg:max-w-4xl w-full leading-relaxed whitespace-pre-line ${isLeft ? 'text-left' : 'text-center'} px-1`}
+              className={`text-[15px] md:text-[18px] font-normal text-white/75 max-w-[90vw] sm:max-w-2xl md:max-w-3xl lg:max-w-4xl w-full leading-relaxed md:leading-[1.8] whitespace-pre-line ${isLeft ? 'text-left' : 'text-center'} px-1`}
             >
               {slide.sub}
             </motion.p>

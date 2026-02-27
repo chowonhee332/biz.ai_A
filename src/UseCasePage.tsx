@@ -15,9 +15,9 @@ export default function UseCasePage() {
     }, []);
 
     return (
-        <div className="min-h-screen bg-[#0a0a0a] text-white font-pretendard flex flex-col">
+        <div className="min-h-screen bg-black text-white font-pretendard flex flex-col">
             {/* GNB */}
-            <nav className="fixed w-full z-50 bg-[#0a0a0a]/80 backdrop-blur-xl py-4 px-6 md:px-10 border-b border-white/5">
+            <nav className="fixed w-full z-50 bg-black/80 backdrop-blur-xl py-4 px-6 md:px-10 border-b border-white/5">
                 <div className="max-w-[1200px] mx-auto flex justify-between items-center px-6 md:px-0">
                     <Link to="/" className="flex items-center gap-2 shrink-0">
                         <img src="/bizai_logo.png" alt="Biz.AI Logo" className="h-6 w-auto" />
@@ -49,7 +49,7 @@ export default function UseCasePage() {
                             initial={{ height: 0, opacity: 0 }}
                             animate={{ height: "auto", opacity: 1 }}
                             exit={{ height: 0, opacity: 0 }}
-                            className="lg:hidden absolute top-full left-0 right-0 bg-[#0a0a0a]/95 backdrop-blur-xl py-4 px-6 overflow-hidden border-b border-white/10"
+                            className="lg:hidden absolute top-full left-0 right-0 bg-black/95 backdrop-blur-xl py-4 px-6 overflow-hidden border-b border-white/10"
                         >
                             <div className="flex flex-col gap-4">
                                 <Link to="/" className="text-white/90 hover:text-white font-medium py-1" onClick={() => setIsMenuOpen(false)}>멀티 에이전트 플랫폼</Link>
@@ -70,32 +70,32 @@ export default function UseCasePage() {
             </nav>
 
             {/* Content Body */}
-            <section className="pt-48 pb-32 flex-1">
+            <section className="pt-24 md:pt-48 pb-16 md:pb-32 flex-1">
                 {/* Header Section */}
-                <div className="max-w-[1200px] mx-auto mb-20">
+                <div className="max-w-[1200px] mx-auto mb-12 md:mb-20 px-4 md:px-0">
                     <motion.div
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, ease: "easeOut" }}
                     >
-                        <h1 className="text-[58px] font-bold bg-gradient-to-r from-white via-white via-[40%] to-[#93C5FD] bg-clip-text text-transparent mb-6 tracking-tight leading-tight">
+                        <h1 className="text-[36px] md:text-[58px] font-bold bg-gradient-to-r from-white via-white via-[40%] to-[#93C5FD] bg-clip-text text-transparent mb-4 md:mb-6 tracking-tight leading-tight">
                             Use Cases
                         </h1>
-                        <p className="text-white/70 text-[18px] max-w-2xl font-medium leading-relaxed">
+                        <p className="text-white/70 text-[15px] md:text-[18px] max-w-2xl font-medium leading-relaxed">
                             다양한 산업 분야에서 Biz.AI를 통해 실현된 혁신 사례를 소개합니다.
                         </p>
                     </motion.div>
                 </div>
 
                 {/* Case Grid Section */}
-                <div className="max-w-[1200px] mx-auto">
+                <div className="max-w-[1200px] mx-auto px-4 md:px-0">
                     {/* Category Filter - Sticky */}
-                    <div className="sticky top-[64px] bg-[#0a0a0a] z-40 flex items-center gap-8 mb-16 border-b border-white/5 py-4 overflow-x-auto no-scrollbar whitespace-nowrap">
+                    <div className="sticky top-[72px] bg-black z-40 flex items-center gap-6 md:gap-8 mb-10 md:mb-16 border-b border-white/5 py-3 md:py-4 overflow-x-auto no-scrollbar whitespace-nowrap">
                         {["All", "데이터 분석", "보고 / 의사결정 향상", "리스크 관리 효율화", "강력한 보안", "내부 업무 처리 향상"].map((category) => (
                             <button
                                 key={category}
                                 onClick={() => setActiveCategory(category)}
-                                className={`text-[18px] font-bold transition-colors shrink-0 ${activeCategory === category ? "text-white" : "text-white/30 hover:text-white/60"}`}
+                                className={`text-[15px] md:text-[18px] font-bold transition-colors shrink-0 ${activeCategory === category ? "text-white" : "text-white/30 hover:text-white/60"}`}
                             >
                                 {category}
                             </button>
@@ -192,17 +192,17 @@ export default function UseCasePage() {
                                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                                 </div>
                                 <div className="flex flex-col gap-3">
-                                    <span className="text-blue-500 text-[15px] font-medium transition-colors">
+                                    <span className="text-blue-500 text-[13px] md:text-[15px] font-medium transition-colors">
                                         {item.industry}
                                     </span>
-                                    <h3 className="text-white text-[22px] font-bold leading-tight group-hover:text-blue-400 transition-colors whitespace-pre-line">
+                                    <h3 className="text-white text-[18px] md:text-[22px] font-bold leading-tight group-hover:text-blue-400 transition-colors whitespace-pre-line">
                                         {item.title}
                                     </h3>
-                                    <p className="text-white/50 text-[15px] leading-relaxed line-clamp-2">
+                                    <p className="text-white/50 text-[14px] md:text-[15px] leading-relaxed line-clamp-2 md:line-clamp-3">
                                         {item.desc}
                                     </p>
-                                    <div className="mt-1">
-                                        <span className="px-3 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-[13px] font-bold text-blue-400 inline-block">
+                                    <div className="mt-1 md:mt-2">
+                                        <span className="px-3 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-[12px] md:text-[13px] font-bold text-blue-400 inline-block">
                                             {item.tag}
                                         </span>
                                     </div>
@@ -214,9 +214,9 @@ export default function UseCasePage() {
             </section>
 
             {/* Footer */}
-            <footer className="bg-[#0a0a0a] py-32 border-t border-white/5">
-                <div className="max-w-[1200px] mx-auto">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-12 mb-24 px-6 md:px-0">
+            <footer className="bg-black py-16 md:py-32 border-t border-white/5">
+                <div className="max-w-[1200px] mx-auto px-4 md:px-0">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-12 mb-16 md:mb-24 px-6 md:px-0">
                         <div className="flex flex-col">
                             <div className="mb-8">
                                 <h4 className="text-[22px] font-bold text-white tracking-tight">kt ds</h4>
@@ -259,8 +259,8 @@ export default function UseCasePage() {
                         </div>
                     </div>
                     <div className="flex flex-col md:flex-row items-center justify-between pt-8 border-t border-white/10 gap-4 px-6 md:px-0">
-                        <p className="text-white/40 text-[14px]">© 2026 kt ds. All rights reserved.</p>
-                        <div className="flex items-center gap-6 text-white/40 text-[14px]">
+                        <p className="text-white/40 text-[12px] md:text-[14px]">© 2026 kt ds. All rights reserved.</p>
+                        <div className="flex items-center gap-6 text-white/40 text-[12px] md:text-[14px]">
                             <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
                             <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
                         </div>
